@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer tailwind-base, primevue, tailwind-utilities;
+
+@layer tailwind-base {
+    @tailwind base;
+}
+
+@layer tailwind-utilities {
+    @tailwind components;
+    @tailwind utilities;
+}
+
+
+.required {
+    @apply after:ml-0.5 after:text-red-500 after:content-['*'] ;
+}
+
+
+.title {
+    @apply font-bold text-2xl mb-2 capitalize;
+}
+
+.btn-base {
+    @apply bg-primary rounded px-4 py-2 font-medium text-white hover:cursor-pointer transition-transform transform-gpu hover:scale-105 capitalize hover:bg-blue-700 duration-300
+}
+
+.input-simple {
+    @apply border-gray-100 focus:border-gray-400 focus:outline-primary input input-bordered bg-gray-100 text-black w-full;
+}
+
+.card-section {
+    @apply bg-white shadow p-5 md:p-8 rounded
+}
