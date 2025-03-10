@@ -1,33 +1,9 @@
-import { globalVars } from '@/boot/config'
 import { AcessAPI } from '@/boot/API';
 
 export default class FinancialService {
 
-  async getTransactions(url, data) {
-    // Im using the .replace because the backend is returning an http url so I need to convert to htpps
-    let url_ = url
-      ? url.replace(/^http:\/\//i, 'https://') + '&'
-      : `${globalVars.API_URL}consolidation/transactions?`
-
-    if (data) {
-      // NOTE: Check which values will be used
-
-      // Add parameters if they exist in the data object
-      if (data.fromDate) url_ += `fromDate=${data.fromDate}&`
-      if (data.toDate) url_ += `toDate=${data.toDate}&`
-      if (data.search) url_ += `search=${data.search}&`
-      // if (data.filters.length > 0) url_ += `type=[${data.filters}]&` // NOTE: API accept one filter per request
-      if (data.itemsPerPage) url_ += `per_page=${data.itemsPerPage}&`
-    }
-
-    // Remove trailing '&' if it exists
-    url_ = url_.endsWith('&') ? url_.slice(0, -1) : url_
-
-    return await AcessAPI.get(url_, {
-      params: {
-        type: JSON.parse(JSON.stringify(data.filters))
-      }
-    })
+  async getTransactions(params = {}) {
+    return await AcessAPI.get('consolidation/transactions', {params})
   }
 
   async getTransactionsTypes() {
