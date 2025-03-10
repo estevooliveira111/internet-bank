@@ -158,7 +158,7 @@ export default {
             // Desenha algo no canvas (por exemplo, um gradiente)
             const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
             gradient.addColorStop(0, "red");
-            gradient.addColorStop(1, "blue");
+            gradient.addColorStop(1, "red");
 
             ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, canvas.width, canvas.height);

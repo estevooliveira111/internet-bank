@@ -1,418 +1,216 @@
 <template>
-  <div>
-    <div>
-      <section class="bg-white shadow rounded p-5 md:p-10 h-auto">
-        <!-- HEADER -->
-        <div class="mb-10 md:mb-5">
-          <div class="flex justify-between items-start flex-wrap mb-5 md:mb-0">
-            <h1 class="font-bold text-2xl mb-2">Transações</h1>
-            <!-- <button @click="exportTableToCSV" class="btn" v-if="!load && transactions && transactions.data.length > 0">
-              Exportar para CSV
-            </button> -->
-          </div>
-          <p class="text-sm text-gray-600">Esta seção permite a visualização das suas transações.</p>
-        </div>
-        <!-- END HEADER -->
+  <PageHeader name="Transações" :links="[
+    { name: 'Dashboard', routerName: 'dashboard' },
+    { name: 'Transações', routerName: 'extract' },
+  ]">
 
-        <!-- FILTERS -->
-        <form class="space-y-5">
-          <div class="flex gap-2">
-            <!-- SEARCH INPUT -->
-            <label class="relative w-full">
-              <div class="absolute left-3 inset-y-0 flex items-center pr-3" @click="TogglePasswordVisibility">
-                <Icon icon="tabler:search" class="text-zinc-500 w-5 h-5" />
-              </div>
-              <input v-model="form.search" required id="search" type="search" placeholder="Pesquisar CPF/CNPJ/TxId/Nome"
-                class="border-gray-100 focus:border-gray-400 focus:outline-gray-600 input input-bordered bg-gray-100 text-black w-full pl-10" />
-            </label>
-            <!-- END SEARCH INPUT -->
-            <GeneralButton @click="getTransactions" :load="load" text="Buscar" />
-          </div>
+    <template #actions>
+      <Button severity="secondary" :loading="loading" label="Filtro" icon="pi pi-filter" @click="visible = true" />
+    </template>
 
-          <div class="flex flex-wrap justify-between gap-5">
-            <div class="flex gap-4 flex-wrap w-full md:w-auto md:flex-nowrap">
-              <!-- FROM DATE -->
-              <label class="form-control w-full md:max-w-64">
-                <div class="label">
-                  <span class="label-text">Do dia</span>
-                </div>
-                <GeneralInput v-model="form.fromDate" type="date" :isRequired="false" id="fromDate" />
-              </label>
-              <!-- END FROM DATE -->
+  </PageHeader>
 
-              <!-- TO DATE -->
-              <label class="form-control w-full md:max-w-64">
-                <div class="label">
-                  <span class="label-text">Até o dia</span>
-                </div>
-                <GeneralInput v-model="form.toDate" type="date" :isRequired="false" id="toDate" />
-              </label>
-              <!-- END TO DATE -->
-            </div>
-            <label class="form-control w-full md:max-w-32">
-              <div class="label">
-                <span class="label-text">Itens por página</span>
-              </div>
-              <select v-model="form.itemsPerPage"
-                class="select border-gray-100 focus:border-gray-400 focus:outline-primary input input-bordered bg-gray-100 text-black w-full">
-                <option disabled selected>Items per page</option>
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="50">50</option>
-              </select>
-            </label>
-          </div>
+  <Drawer v-if="transactionsTypes && transactions" v-model:visible="visible" class="w-full lg:!w-[30rem]"
+    header="Filtro:" position="right" :style="{ width: '50rem' }" modal pt:root:class="!border-0 bg-white"
+    pt:mask:class="backdrop-blur-sm">
 
-          <div>
-            <h3 class="text-sm mb-2">Tipos de extrato</h3>
-            <div v-if="transactionsTypes" class="flex gap-6 flex-wrap whitespace-nowrap">
-              <label class="flex items-center gap-1" v-for="type in transactionsTypes" :key="type.id">
-                <input type="checkbox" :value="type.id" class="rounded accent-primary w-4 h-4" v-model="form.filters" />
-                <span>{{ type.name }}</span>
-              </label>
-            </div>
-
-            <div v-else class="flex gap-6 flex-wrap whitespace-nowrap">
-              <label class="flex items-center gap-1 bg-gray-200 skeleton h-5 w-20"> </label>
-              <label class="flex items-center gap-1 bg-gray-200 skeleton h-5 w-20"> </label>
-
-              <label class="flex items-center gap-1 bg-gray-200 skeleton h-5 w-20"> </label>
-
-              <label class="flex items-center gap-1 bg-gray-200 skeleton h-5 w-20"> </label>
-
-              <label class="flex items-center gap-1 bg-gray-200 skeleton h-5 w-20"> </label>
-
-              <label class="flex items-center gap-1 bg-gray-200 skeleton h-5 w-20"> </label>
-            </div>
-          </div>
-        </form>
-        <!-- END FILTERS -->
-
-        <!-- TABLE -->
-        <div class="relative overflow-x-auto mt-10">
-          <table class="w-full text-left rtl:text-right text-gray-500" id="table">
-            <thead class="text-gray-700 uppercase bg-gray-50">
-              <tr>
-                <th scope="col" class="px-6 py-3">#</th>
-                <th scope="col" class="px-6 py-3">Descrição</th>
-                <th scope="col" class="px-6 py-3 text-center">Tipo</th>
-                <th scope="col" class="px-6 py-3 text-center">Valor</th>
-                <th scope="col" class="px-6 py-3 text-center">Saldo</th>
-                <th scope="col" class="px-6 py-3 text-center">Data</th>
-                <th scope="col" class="px-6 py-3 text-center"></th>
-              </tr>
-            </thead>
-
-            <tbody v-if="!load && transactions && transactions.data.length > 0">
-              <tr class="bg-white border-b" v-for="(transaction, index) in transactions.data" :key="index">
-
-
-
-
-
-                <td class="px-6 py-4">{{ transaction.id }}</td>
-
-                <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                  
-                  <template v-if="![13, 12, 9].includes(transaction.type_id)">
-                    <span v-if="transaction?.type?.id == 7 && transaction?.details?.pagador">
-                    {{ transaction.details?.pagador?.nome }} ||
-                    {{ transaction.details?.type?.name }}
-                  </span>
-                  <span v-else-if="transaction.details && transaction.details.pagador">
-                    {{ transaction.details.pagador.nome }} ||
-                    {{ transaction.details.pagador.document ?? transaction.details.pagador.documento }}
-                  </span>
-
-                  <span v-else-if="transaction?.details && transaction?.details?.nomeBeneficiario">
-                    {{ transaction?.details?.nomeBeneficiario }} ||
-                    {{ transaction?.details?.documentoBeneficiario }}
-                  </span>
-
-                  <span v-else-if="transaction?.details?.conta?.name">
-                    {{ transaction?.details?.conta?.name }}
-                  </span>
-
-
-                  <span v-else-if="transaction?.json && transaction?.type?.id == 6 || transaction?.type?.id == 11">
-                    {{ transaction?.json?.pagador?.nome }} ||
-                    {{ transaction?.json?.pagador?.document ?? transaction?.json?.pagador?.documento  }}
-                  </span>
-
-                  <span v-else>
-                    {{(transaction?.description)}}
-                  </span>
-                  </template>
-
-                </td>
-
-                <td class="px-6 py-4 text-center whitespace-nowrap">{{ transaction?.type?.name }}</td>
-                <!-- NOTE: I'm using parseFloat because the numbers are coming as "1.00" or "2.00" -->
-                <td class="px-6 py-4 text-center whitespace-nowrap">
-                  <span :class="{
-                    'bg-red-500/35 px-4  rounded-md py-2 font-bold text-red-500': parseFloat(transaction.value) < 0,
-                    'bg-green-500/25 px-4  rounded-md py-2 font-bold text-green-500': parseFloat(transaction.value) > 0
-                  }">
-                    {{ FormatMonetaryValue(parseFloat(transaction.value)) }}
-                  </span>
-                </td>
-
-                <td class="px-6 py-4 text-center whitespace-nowrap">
-                  <span :class="{
-                    'bg-red-500/35 px-4  rounded-md py-2 font-bold text-red-500': parseFloat(transaction.balance) < 0,
-                    'bg-green-500/25 px-4  rounded-md py-2 font-bold text-green-500': parseFloat(transaction.balance) > 0,
-                    'bg-gray-500/25 px-4  rounded-md py-2 font-bold text-gray-500': parseFloat(transaction.balance) == null
-                  }">
-                    {{ FormatMonetaryValue(parseFloat(transaction.balance)) }}
-                  </span>
-                </td>
-
-                <td class="px-6 py-4 text-center whitespace-nowrap">
-                  {{ moment(transaction.created_at).format('DD/MM/YYYY') }} |
-                  {{ moment(transaction.created_at).format('HH:mm:ss') }}
-                </td>
-                <td class="px-6 py-4 text-center whitespace-nowrap">
-                  <!-- <ModalTransactionDetails :transaction="transaction" :buttonMessage="'Ver detalhes'" /> -->
-                  <ModalTransactionDetailSicredi :transaction="transaction" :buttonMessage="'Ver detalhes'" />
-                </td>
-              </tr>
-            </tbody>
-
-            <tbody v-if="!load && transactions && transactions.data.length === 0"
-              class="border-separate border-spacing-2">
-              <tr class="bg-white border-b">
-                <td class="p-6"></td>
-                <td class="p-6"></td>
-                <td class="p-6">
-                  <span class="whitespace-nowrap">Nenhum registro encontrado</span>
-                </td>
-              </tr>
-            </tbody>
-
-            <tbody v-if="load" class="border-separate border-spacing-2">
-              <tr v-for="index in 5" :key="index" class="bg-red border-b">
-                <td class="p-4">
-                  <span class="skeleton w-full bg-gray-200 h-5 flex"></span>
-                </td>
-                <td class="p-6"><span class="skeleton w-full bg-gray-200 h-5 flex"></span></td>
-                <td class="p-6"><span class="skeleton w-full bg-gray-200 h-5 flex"></span></td>
-                <td class="p-6"><span class="skeleton w-full bg-gray-200 h-5 flex"></span></td>
-                <td class="p-6"><span class="skeleton w-full bg-gray-200 h-5 flex"></span></td>
-                <td class="p-6"><span class="skeleton w-full bg-gray-200 h-5 flex"></span></td>
-                <td class="p-6"><span class="skeleton w-full bg-gray-200 h-5 flex"></span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <!-- END TABLE -->
-
-        <!-- PAGINATION -->
-        <DynamicPagination :itemsToPaginate="transactions" @changePage="changeTransactionsPage" />
-
-        <!-- END PAGINATION -->
-      </section>
-    </div>
-  </div>
-
-  <!-- NOTE: check the information and refactor  -->
-  <dialog id="transaction_information" ref="transaction_information" class="modal modal-bottom sm:modal-middle">
-    <div class="modal-box">
-      <div class="flex justify-between items-start flex-wrap mb-5 md:mb-0 gap-2">
-        <h3 class="font-bold text-lg">Detalhes da Transação:</h3>
-      </div>
-
-      <hr class="my-10 border-gray-500 border">
+    <div class="grid grid-cols-2 gap-2 mt-2">
 
       <div>
-        <ul class="flex flex-col gap-2 mt-8">
-          <li v-if="selectedTransaction && selectedTransaction.endtoendid">
-            id: <span class="font-bold">{{ selectedTransaction.endtoendid }}</span>
-          </li>
-
-          {{ selectedTransaction }}
-
-          <li v-if="selectedTransaction && selectedTransaction.type" class="mt-4">
-            Tipo: <span class="font-bold">{{ selectedTransaction.type.name }}</span>
-          </li>
-          <li v-if="selectedTransaction && selectedTransaction.description">
-            Descrição: <span class="font-bold">{{ selectedTransaction.description }}</span>
-          </li>
-          <li v-if="selectedTransaction && selectedTransaction.created_at">
-            Data:
-            <span class="font-bold">{{
-              moment(selectedTransaction.created_at).format('DD/MM/YYYY HH:mm:ss')
-              }}</span>
-          </li>
-          <li v-if="selectedTransaction && selectedTransaction.created_at">
-            Hora:
-            <span class="font-bold">{{
-              moment(selectedTransaction.created_at).format('HH:mm:ss')
-              }}</span>
-          </li>
-
-          <li v-if="selectedTransaction && selectedTransaction.details" class="mt-4 font-bold">
-            Pagador
-          </li>
-          {{ selectedTransaction }}
-          <li v-if="selectedTransaction && selectedTransaction.details">
-            Nome:
-            <span class="font-bold">{{ selectedTransaction.details.pagador.nome }}</span>
-          </li>
-          <li v-if="selectedTransaction && selectedTransaction.details">
-            Conta:
-            <span class="font-bold">{{ selectedTransaction.details.pagador.conta }}</span>
-          </li>
-          <li v-if="selectedTransaction && selectedTransaction.details">
-            Agência:
-            <span class="font-bold">{{ selectedTransaction.details.pagador.agency }}</span>
-          </li>
-          <li v-if="selectedTransaction && selectedTransaction.details">
-            Documento:
-            <span class="font-bold">{{ selectedTransaction.details.pagador.documento }}</span>
-          </li>
-
-          <li v-if="selectedTransaction && selectedTransaction.details" class="mt-4 font-bold">
-            Recebedor
-          </li>
-          <li v-if="selectedTransaction && selectedTransaction.details">
-            Nome:
-            <span class="font-bold">{{ selectedTransaction.details.recebedor.nome }}</span>
-          </li>
-          <li v-if="selectedTransaction && selectedTransaction.details">
-            Conta:
-            <span class="font-bold">{{ selectedTransaction.details.recebedor.conta }}</span>
-          </li>
-          <li v-if="selectedTransaction && selectedTransaction.details">
-            Agência:
-            <span class="font-bold">{{ selectedTransaction.details.recebedor.agency }}</span>
-          </li>
-          <li v-if="selectedTransaction && selectedTransaction.details">
-            Documento:
-            <span class="font-bold">{{ selectedTransaction.details.recebedor.documento }}</span>
-          </li>
-
-          <li v-if="selectedTransaction && selectedTransaction.value" class="mt-8">
-            Valor:
-            <span class="font-bold">{{
-              FormatMonetaryValue(parseFloat(selectedTransaction.value))
-              }}</span>
-          </li>
-        </ul>
+        <label>Data Inicio</label>
+        <DatePicker dateFormat="dd/mm/yy" v-model="paginator.fromDate" :maxDate="today" type="date" class="w-full" />
       </div>
 
-      <hr class="my-10 border-gray-500 border">
-
-      <div class="modal-action">
-        <form method="dialog" class="flex gap-4">
-          <!-- <button v-if="selectedTransaction.details" @click="exportAsPdfData"
-            class="flex items-center gap-2 hover:text-primary" title="Baixar">
-            <Icon icon="material-symbols:download" class="w-6 h-6" />
-            <p class="text">Baixar</p>
-          </button> -->
-          <button class="btn">Fechar</button>
-        </form>
+      <div>
+        <label>Data Fim</label>
+        <DatePicker dateFormat="dd/mm/yy" v-model="paginator.endDate" :maxDate="today" type="date" class="w-full" />
       </div>
+
     </div>
-  </dialog>
 
+    <div class="mt-4">
+      <label>Tipo de Transação</label>
+      <MultiSelect v-model="paginator.type" optionLabel="name" :options="transactionsTypes" class="w-full" />
+    </div>
+
+    <div class="mt-4">
+      <label>Qtd. por página</label>
+      <Select v-model="paginator.per_page" :options="[
+        { label: 25, value: 25 },
+        { label: 30, value: 30 },
+        { label: 50, value: 50 },
+        { label: 100, value: 100 },
+        { label: 500, value: 500 }
+      ]" optionLabel="label" optionValue="value" class="w-full" />
+    </div>
+
+    <!-- {{ transactionsTypes }} -->
+
+    <template #footer>
+      <div class="flex items-center gap-2 justify-between">
+        <Button @click="resetFilters" label="Limpar Filtros" icon="pi pi-sign-out" class="flex-auto" severity="danger"
+          text />
+        <Button @click="fetchTransactions" label="Pesquisar" :loading="loading" icon="pi pi-search" class="flex-auto"
+          outlined severity="success" />
+      </div>
+    </template>
+
+  </Drawer>
+
+  <header>
+    <InputGroup>
+      <InputText  @keyup.enter="fetchTransactions" placeholder="Pesquisa pelo Nome, CPF, TxID, ToEndID" v-model="paginator.search" />
+      <InputGroupAddon>
+        <Button icon="pi pi-search" :loading="loading" class="bg-secondary-content text-white border-0" variant="text" @click="fetchTransactions" />
+      </InputGroupAddon>
+    </InputGroup>
+  </header>
+
+  <Card class="mt-5">
+
+    <template #content>
+      <DataTable scrollable :loading="loading" :value="transactions?.data" responsiveLayout="scroll" :rows="transactions.per_page" :totalRecords="transactions.total" :first="transactions.current_page">
+
+        <Column field="id" header="#" />
+        <Column field="description" header="Descrição/Detalhes" sortable>
+          <template #body="slotProps">
+            <div v-if="slotProps.data?.details?.pagador?.nome || slotProps.data?.details?.pagador?.documento">
+              <div v-if="slotProps.data?.details?.pagador?.nome" class="font-semibold text-gray-800">{{ slotProps.data?.details?.pagador?.nome }}</div>
+              <div v-if="slotProps.data?.details?.pagador?.documento" class="text-sm text-gray-500">{{ $formatDocument(slotProps.data?.details?.pagador?.documento) }}</div>
+            </div>
+          </template>
+        </Column>
+        <Column field="type.name" header="Tipo" sortable></Column>
+
+        <Column field="value" header="Valor" sortable>
+          <template #body="slotProps">
+            <span class="font-bold" :class="{
+              'text-red-500': slotProps.data.value <= 0,
+              'text-green-500': slotProps.data.value > 0,
+            }">{{ $amount(slotProps.data.value) }}</span>
+          </template>
+        </Column>
+
+        <Column field="balance" header="Saldo" sortable>
+          <template #body="slotProps">
+            <span class="font-bold text-sm">
+              {{ $amount(slotProps.data.balance) }}
+            </span>
+          </template>
+        </Column>
+
+        <Column field="created_at" header="Data" sortable>
+          <template #body="slotProps">
+            {{ $moment(slotProps.data.created_at).format('DD/MM/yyyy hh:mm:ss') }}
+          </template>
+        </Column>
+
+
+        <Column sortable>
+          <template #body="slotProps">
+            <ModalTransactionDetailSicredi :transaction="slotProps.data" :buttonMessage="'Ver detalhes'" />
+          </template>
+        </Column>
+
+
+        <template #empty>
+          <p class="text-center p-5">Nenhuma transação encontrada.</p>
+        </template>
+
+      </DataTable>
+    </template>
+
+    <template #footer>
+      <div class="flex justify-between items-center" v-if="transactions">
+        <span>
+          Mostrando <strong>{{ transactions.from }}</strong> a
+          <strong>{{ transactions?.to }}</strong> de
+          <strong>{{ transactions?.total }}</strong> registros.
+        </span>
+        <Paginator :first="transactions.from" :rows="transactions.per_page" :totalRecords="transactions?.total" @page="fetchTransactions" />
+      </div>
+    </template>
+
+  </Card>
 </template>
-<script>
-import { Icon } from '@iconify/vue'
-import { useBalanceStore } from '@/stores/BalanceStore'
-import GeneralInput from '@/components/GeneralInput.vue'
-import GeneralButton from '@/components/GeneralButton.vue'
-import FinancialService from '../services/FinancialService'
-import { FormatMonetaryValue } from '@/utils/FormatMonetaryValue'
-import DynamicPagination from '../components/DynamicPagination.vue'
-import ModalTransactionDetails from '@/components/ModalTransactionDetails.vue'
+
+<script setup>
 import ModalTransactionDetailSicredi from '@/components/ModalTransactionDetailSicredi.vue'
+import PageHeader from '@/components/PageHeader.vue';
+import { ref } from 'vue';
 
-import moment from 'moment'
-export default {
-  components: { GeneralInput, Icon, GeneralButton, DynamicPagination, ModalTransactionDetails, ModalTransactionDetailSicredi },
-  setup() {
-    return {
-      moment,
-      balance: useBalanceStore(),
-      FormatMonetaryValue,
-      financialService: new FinancialService()
+import {
+  DataTable,
+  Column,
+  Card, DatePicker, Select, Button, Paginator, Drawer, MultiSelect, InputText, InputGroup, InputGroupAddon
+} from 'primevue';
+
+import FinancialService from '@/services/FinancialService';
+import moment from 'moment';
+
+const visible = ref(false);
+const loading = ref(false);
+const transactions = ref({ data: [], total: 0 });
+const transactionsTypes = ref(false);
+const today = new Date();
+
+const paginator = ref({
+  page: 1,
+  per_page: 25,
+  search: '',
+  fromDate: new Date(today.getFullYear(), 0, 1),
+  endDate: new Date(today),
+  type: '',
+});
+
+function fetchTransactions(i = undefined) {
+  loading.value = true;
+
+  Object.keys(paginator.value).forEach(key => {
+    if (paginator.value[key] === null || paginator.value[key] === '') {
+      delete paginator.value[key];
     }
-  },
-  data() {
-    return {
-      transactions: false,
-      selectedTransaction: {},
-      transactionsTypes: false,
-      load: false,
-      form: {
-        fromDate: '',
-        toDate: '',
-        search: '',
-        filters: [],
-        itemsPerPage: 10
-      }
-    }
-  },
+  });
 
-  created() {
-    this.getTransactions()
-    this.getTransactionsTypes()
-    this.balance.setBalance();
-  },
-
-  methods: {
-
-    showAditionalInformation(transaction) {
-      this.selectedTransaction = transaction
-      if (typeof this.selectedTransaction.details === 'string')
-        this.selectedTransaction.details = JSON.parse(this.selectedTransaction.details)
-
-      this.$refs.transaction_information.showModal()
-
-      console.log(transaction)
-    },
-
-    getTransactionsTypes() {
-      this.load = true
-      this.financialService.getTransactionsTypes()
-        .then((response) => {
-          this.transactionsTypes = response.data
-        })
-        .finally(() => this.load = false)
-    },
-
-    getTransactions() {
-      this.load = true;
-
-      this.financialService.getTransactions(null, this.form)
-        .then((response) => {
-          if (response.data) this.transactions = response.data
-        })
-        .catch(() => {
-          this.transactions = {
-            data: []
-          }
-        })
-        .finally(() => (this.load = false))
-    },
-
-    async changeTransactionsPage(url) {
-      this.load = true
-      this.financialService.getTransactions(url, this.form)
-        .then(({ data }) => {
-          this.transactions = data
-        })
-        .catch(() => {
-          this.transactions = {
-            data: []
-          }
-        })
-        .finally(() => {
-          this.load = false
-        })
-    }
-
+  if (i && i.page) {
+    console.log(i);
+    paginator.value.page = i.page + 1;
   }
+
+  let paramers = {
+    ...paginator.value,
+  };
+
+  if (paginator.value.startDate && paramers.fromDate) {
+    paramers.fromDate = moment(paginator.value.startDate).format('YYYY-MM-DD');
+  }
+
+  if (paginator.value.endDate && paramers.endDate) {
+    paramers.endDate = moment(paginator.value.endDate).format('YYYY-MM-DD');
+  }
+
+  new FinancialService().getTransactions(paramers)
+    .then(({ data }) => {
+      console.log(data);
+      transactions.value = data;
+    })
+    .finally(() => {
+      visible.value = false;
+      loading.value = false;
+    })
 }
+
+function resetFilters() { }
+
+function getTransactionsTypes() {
+  loading.value = true;
+  new FinancialService().getTransactionsTypes()
+    .then(({ data }) => {
+      transactionsTypes.value = data
+    })
+    .finally(() => loading.value = false)
+}
+
+fetchTransactions();
+getTransactionsTypes()
 </script>

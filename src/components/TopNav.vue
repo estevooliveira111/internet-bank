@@ -24,7 +24,7 @@
       </div>
 
       <!-- DESKTOP -->
-      <ul class="md:flex hidden items-center gap-2 text-blue-700">
+      <ul class="md:flex hidden items-center gap-2 text-red-700">
         <!-- BALANCE -->
         <li class="group relative bg-white rounded mr-0 px-3 mb-1">
           <div v-if="isRole" class="flex w-full py-2 justify-between gap-6">
@@ -70,7 +70,7 @@
             </div>
 
             <button
-              class="flex items-center text-primary hover:text-blue-500"
+              class="flex items-center text-primary hover:text-red-500"
               @click="isAccountOptionsOpen = !isAccountOptionsOpen"
               title="Trocar conta"
             >
@@ -116,7 +116,7 @@
           <router-link
             :to="{ name: 'settings-main-account' }"
             title="Configurações"
-            class="flex items-center p-4 gap-2 rounded mb-1 hover:text-blue-500 text-white hover:bg-white transition"
+            class="flex items-center p-4 gap-2 rounded mb-1 hover:text-red-500 text-white hover:bg-white transition"
           >
             <Icon icon="ion:settings-outline" class="w-5 h-5" />
           </router-link>
@@ -293,6 +293,6 @@ export default {
 
 <style scoped>
 .router-link-active {
-  @apply bg-white text-blue-500;
+  @apply bg-white text-red-500;
 }
 </style>

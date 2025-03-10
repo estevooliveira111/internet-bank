@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="md:grid md:grid-cols-6 gap-4">
-      <InternalNav :links="links" class="col-span-2" />
+      
       <section class="mt-5 md:mt-0 col-span-4 bg-white shadow rounded p-5 md:p-10 h-auto">
         <PixAreaHeader v-if="this.shareMessage !== ''"
           :shareMessage="shareMessage"
@@ -12,7 +12,6 @@
         <h1 class="font-bold text-2xl mb-2">QRCode Fixo</h1>
         <p class="text-sm text-gray-600">Esta página permite a transferência de valores através do PIX usando um QR Code fixo.</p>
 
-        <!-- QRCODE AREA -->
         <div class="flex items-center justify-center flex-col text-center gap-4 mt-10">
           <div class="max-w-2xl space-y-6">
             <div class="relative flex items-center justify-center" id="qr-code-image">
@@ -48,7 +47,6 @@ import QrcodeVue from 'qrcode.vue'
 
 import { theme } from '../services/Thema';
 
-// utils/services
 import Toast from '@/boot/Toast'
 import FinancialService from '../services/FinancialService'
 import { FormatMonetaryValue } from '@/utils/FormatMonetaryValue'
@@ -75,7 +73,6 @@ export default {
   data() {
     return {
       qrCode: '',
-      // qrCodeImage: '',
       load: false,
       shareMessage: '',
       links: [

@@ -29,8 +29,6 @@ export const UserStore = defineStore('UserStore', {
         })
 
         localStorage.setItem('token', response.data.token)
-        localStorage.setItem('role', response?.data?.roles?.name)
-        localStorage.setItem('permissions', JSON.stringify(response.data.permissions))
 
         this.user = response.data.user;
         this.role = response?.data?.roles?.name;

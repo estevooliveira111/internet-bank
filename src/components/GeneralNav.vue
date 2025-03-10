@@ -41,10 +41,7 @@ const menus = [
     title: 'Extrato',
     routePath: 'extract',
     iconName: 'fluent:document-text-extract-20-regular',
-    active:
-      localStorage.getItem('role') === 'undefined' || localStorage.getItem('role') === 'Funcionario'
-        ? false
-        : true
+    active: true
   },
   {
     id: 2,
@@ -65,10 +62,7 @@ const menus = [
     title: 'Transferir PIX',
     routePath: 'pix-out',
     iconName: 'uil:money-insert',
-    active:
-      localStorage.getItem('role') === 'undefined' || localStorage.getItem('role') === 'Funcionario'
-        ? false
-        : true
+    active: true
   },
   //{
   //  id: 6,
@@ -96,7 +90,7 @@ const menus = [
     title: 'QR Code Estático',
     routePath: 'fixed-qrcode',
     iconName: 'material-symbols-light:qr-code-2',
-    active: 0
+    active: 1
   },
   {
     id: 7,

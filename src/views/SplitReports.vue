@@ -17,7 +17,7 @@
                     <div>
                         <label for="startMonth" class="text-sm font-medium leading-none text-gray-700">Mês Inicial</label>
                         <select id="startMonth" v-model="startMonth" @change="fetchSplits"
-                            class="mt-1 select select-bordered w-full border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                            class="mt-1 select select-bordered w-full border border-gray-300 rounded-md shadow-sm focus:border-red-500 focus:ring focus:ring-red-200 focus:ring-opacity-50">
                             <option value="">Selecione um mês</option>
                             <option v-for="month in months" :key="month.value" :value="month.value">{{ month.label }}</option>
                         </select>
@@ -26,7 +26,7 @@
                     <div>
                         <label for="account" class="text-sm font-medium leading-none text-gray-700">Conta</label>
                         <input id="account" v-model="accountName" @input="fetchSplits"
-                            class="mt-1 block input w-full border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
+                            class="mt-1 block input w-full border border-gray-300 rounded-md shadow-sm focus:border-red-500 focus:ring focus:ring-red-200 focus:ring-opacity-50" />
                     </div>
                 </div>
             </div>
