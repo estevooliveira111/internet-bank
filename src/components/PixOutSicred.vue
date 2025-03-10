@@ -20,7 +20,7 @@
               masked: false
             }"
             type="text"
-            class="input w-full mt-1 border border-blue-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
+            class="input w-full mt-1 border border-red-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-red-600"
             placeholder="R$ 0,00"
           />
           <div class="label">
@@ -41,7 +41,7 @@
           </div>
           <select
             v-model="form.keyType"
-            class="input w-full mt-1 border border-blue-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
+            class="input w-full mt-1 border border-red-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-red-600"
             required
           >
             <option value="" disabled selected>Selecione o tipo de chave</option>
@@ -66,7 +66,7 @@
             require
             :placeholder="placeh"
             type="text"
-            class="input w-full mt-1 border border-blue-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
+            class="input w-full mt-1 border border-red-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-red-600"
           />
            <input
             v-model="form.codePix"
@@ -75,7 +75,7 @@
             v-mask="mask"
             :placeholder="placeh"
             type="text"
-            class="input w-full mt-1 border border-blue-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
+            class="input w-full mt-1 border border-red-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-red-600"
           />
         </label>
 
@@ -83,7 +83,7 @@
           <button
             type="submit"
             :disabled="load"
-            class="bg-blue-600 text-white px-6 py-2 rounded-md font-semibold focus:outline-none focus:ring-2 focus:ring-blue-600 hover:bg-blue-700 disabled:bg-blue-300"
+            class="bg-red-600 text-white px-6 py-2 rounded-md font-semibold focus:outline-none focus:ring-2 focus:ring-red-600 hover:bg-red-700 disabled:bg-red-300"
           >
             Confirmar
           </button>
@@ -114,7 +114,7 @@
             v-mask="['###.###.###-##', '##.###.###/####-##']"
             placeholder="CPF, CNPJ"
             type="text"
-            class="input w-full mt-1 border border-blue-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
+            class="input w-full mt-1 border border-red-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-red-600"
           />
         </label>
       </div>
@@ -129,7 +129,7 @@
         <button
           @click="submit"
           :disabled="load"
-          class="bg-blue-600 text-white px-6 py-2 rounded-md font-semibold focus:outline-none focus:ring-2 focus:ring-blue-600 hover:bg-blue-700 disabled:bg-blue-300"
+          class="bg-red-600 text-white px-6 py-2 rounded-md font-semibold focus:outline-none focus:ring-2 focus:ring-red-600 hover:bg-red-700 disabled:bg-red-300"
         >
           Confirmar Transação
         </button>
@@ -149,7 +149,7 @@
     </div>
 
     <div class="flex mt-4">
-      <button @click="setForm" class="bg-blue-600 text-white px-6 py-2 rounded-md font-semibold focus:outline-none focus:ring-2 focus:ring-blue-600 hover:bg-blue-700">
+      <button @click="setForm" class="bg-red-600 text-white px-6 py-2 rounded-md font-semibold focus:outline-none focus:ring-2 focus:ring-red-600 hover:bg-red-700">
         Realizar Nova Transferência
       </button>
     </div>

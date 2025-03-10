@@ -246,7 +246,7 @@ const router = createRouter({
       path: '/login',
       meta: { title: 'Login' },
       name: 'login',
-      component: () => import('../views/LoginView.vue')
+      component: () => import('../views/auth/LoginView.vue')
     }, {
       path: '/resetar-senha',
       meta: { title: 'Resetar Senha' },

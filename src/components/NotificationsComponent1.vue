@@ -2,7 +2,7 @@
 
     <div class="group relative md:hidden" :class="!isNotificationsOpen ? 'rounded' : 'rounded-t'" id="notification">
         <div class="relative flex w-full justify-between" @click="notificationStore.fetchNotifications()">
-            <button class="flex items-center p-2 gap-2 rounded hover:text-blue-500 text-white hover:bg-white transition"
+            <button class="flex items-center p-2 gap-2 rounded hover:text-red-500 text-white hover:bg-white transition"
                 @click="isNotificationsOpen = !isNotificationsOpen"
                 :class="isNotificationsOpen ? 'bg-white !text-primary' : ''" title="Trocar conta">
                 <Icon icon="material-symbols:notifications-outline" class="w-5 h-5" />

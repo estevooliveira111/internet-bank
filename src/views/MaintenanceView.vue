@@ -1,7 +1,7 @@
 <template>
     <div class="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">
         <div class="bg-white p-8 rounded-lg shadow-md max-w-md w-full text-center">
-            <Icon icon="mdi:settings" class="w-16 h-16 text-blue-500 mx-auto mb-4 animate-spin" />
+            <Icon icon="mdi:settings" class="w-16 h-16 text-red-500 mx-auto mb-4 animate-spin" />
             <h1 class="text-2xl font-bold text-gray-800 mb-2">Painel em Manutenção</h1>
             <p class="text-gray-600 mb-6">
                 Estamos realizando algumas melhorias. Voltaremos em breve!

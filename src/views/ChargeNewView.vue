@@ -40,14 +40,14 @@
 
                 <div class="flex items-center mb-4">
                     <input checked id="checked-checkbox" type="checkbox" v-model="formData.check_discount"
-                        class="w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-primary dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        class="w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded focus:ring-red-500 dark:focus:ring-primary dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                     <label for="checked-checkbox" class="ms-2 text-sm font-medium text-gray-900">Adicionar
                         Desconto</label>
                 </div>
 
                 <div class="flex items-center mb-4">
                     <input checked id="checked-checkbox" type="checkbox" v-model="formData.check_rate"
-                        class="w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-primary dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        class="w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded focus:ring-red-500 dark:focus:ring-primary dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                     <label for="checked-checkbox" class="ms-2 text-sm font-medium text-gray-900">Adicionar Multa</label>
                 </div>
 
@@ -74,14 +74,14 @@
 
                     <div class="join">
                         <button type="button" @click="typeFine = 1" :class="{
-                            'bg-blue-700 text-white hover:bg-blue-800': typeFine === 1,
-                            'py-2.5 px-5 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 join-item': typeFine !== 1
+                            'bg-red-700 text-white hover:bg-red-800': typeFine === 1,
+                            'py-2.5 px-5 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-red-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 join-item': typeFine !== 1
                         }" class="font-medium rounded-lg text-sm px-5 py-2.5 mb-2 focus:outline-none join-item">
                             Porcentagem
                         </button>
                         <button type="button" @click="typeFine = 2" :class="{
-                            'bg-blue-700 text-white hover:bg-blue-800': typeFine === 2,
-                            'py-2.5 px-5 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 join-item': typeFine !== 2
+                            'bg-red-700 text-white hover:bg-red-800': typeFine === 2,
+                            'py-2.5 px-5 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-red-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 join-item': typeFine !== 2
                         }" class="font-medium rounded-lg text-sm px-5 py-2.5 mb-2 focus:outline-none join-item">Valor
                             Fixo</button>
                     </div>
@@ -92,7 +92,7 @@
                             <span
                                 class="font-semibold inline-flex items-center px-5 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0 rounded-s-md">%</span>
                             <input v-model="formData.discount" type="text" max="100" id="website-admin"
-                                class="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
+                                class="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-red-500 focus:border-red-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
                                 placeholder="Porcentagem">
                         </div>
 
@@ -100,7 +100,7 @@
                             <span
                                 class="inline-flex items-center px-5 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0 rounded-s-md">R$</span>
                             <input type="text" disabled id="website-admin"
-                                class="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5">
+                                class="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-red-500 focus:border-red-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5">
                         </div>
 
                     </div>
@@ -109,7 +109,7 @@
                         <span
                             class="inline-flex items-center px-5 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0 rounded-s-md">R$</span>
                         <input type="text" v-model="formData.discount" id="website-admin"
-                            class="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
+                            class="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-red-500 focus:border-red-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
                             placeholder="Valor Fixo">
                     </div>
 
@@ -147,14 +147,14 @@
 
                     <div class="join">
                         <button type="button" @click="typeDiscount = 1" :class="{
-                            'bg-blue-700 text-white hover:bg-blue-800': typeDiscount === 1,
-                            'py-2.5 px-5 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 join-item': typeDiscount !== 1
+                            'bg-red-700 text-white hover:bg-red-800': typeDiscount === 1,
+                            'py-2.5 px-5 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-red-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 join-item': typeDiscount !== 1
                         }" class="font-medium rounded-lg text-sm px-5 py-2.5 mb-2 focus:outline-none join-item">
                             Porcentagem
                         </button>
                         <button type="button" @click="typeDiscount = 2" :class="{
-                            'bg-blue-700 text-white hover:bg-blue-800': typeDiscount === 2,
-                            'py-2.5 px-5 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 join-item': typeDiscount !== 2
+                            'bg-red-700 text-white hover:bg-red-800': typeDiscount === 2,
+                            'py-2.5 px-5 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-red-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 join-item': typeDiscount !== 2
                         }" class="font-medium rounded-lg text-sm px-5 py-2.5 mb-2 focus:outline-none join-item">Valor
                             Fixo</button>
                     </div>
@@ -165,7 +165,7 @@
                                 class="font-semibold inline-flex items-center px-5 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0 rounded-s-md">%</span>
                             <input type="number" maxlength="100" v-model="formData.rate" id="rate-admin" min="0"
                                 max="100" step="0.01"
-                                class="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
+                                class="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-red-500 focus:border-red-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
                                 placeholder="Porcentagem">
                         </div>
 
@@ -173,7 +173,7 @@
                             <span
                                 class="inline-flex items-center px-5 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0 rounded-s-md">R$</span>
                             <input type="text" disabled :value="calculatedDiscount"
-                                class="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5">
+                                class="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-red-500 focus:border-red-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5">
                         </div>
                     </div>
 
@@ -181,7 +181,7 @@
                         <span
                             class="inline-flex items-center px-5 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0 rounded-s-md">R$</span>
                         <input type="text" v-model="formData.rate" id="website-admin"
-                            class="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
+                            class="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-red-500 focus:border-red-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
                             placeholder="Valor Fixo">
                     </div>
 

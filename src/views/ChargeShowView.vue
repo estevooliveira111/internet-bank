@@ -44,7 +44,7 @@
                             'badge bg-violet-600 p-2': chargeData.status.id == '4',
                             'badge bg-purple-600 p-2': chargeData.status.id == '5',
                             'badge bg-orange-600 p-2': chargeData.status.id == '6',
-                            'badge bg-blue-600 p-2': chargeData.status.id == '7',
+                            'badge bg-red-600 p-2': chargeData.status.id == '7',
                             'badge bg-pink-600 p-2': chargeData.status.id == '8',
                             'badge bg-teal-600 p-2': chargeData.status.id == '9',
                             'badge bg-gray-600 p-2': chargeData.status.id == '10',
@@ -57,7 +57,7 @@
                         <div class="font-semibold">Metodos de Pagamendo</div>
                         <div class="flex rounded-2xl">
                             <p v-if="chargeData?.pix_id && chargeData?.boleto_id"
-                                class="text-sm text-blue-500 bg-blue-100 px-2 py-1">BolePix</p>
+                                class="text-sm text-red-500 bg-red-100 px-2 py-1">BolePix</p>
                             <p v-else-if="chargeData?.boleto_id" class="text-sm text-green-500 bg-green-100 px-2 py-1">
                                 Boleto</p>
                             <p v-else-if="chargeData?.pix_id" class="text-sm text-purple-500 bg-purple-100 px-2 py-1">

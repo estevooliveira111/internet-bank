@@ -31,14 +31,14 @@
               placeholder="+55 (11) 98765-4321"
               v-model="phone"
               required
-              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
             />
           </div>
           <p class="text-xs text-gray-500">
             Seu telefone será validado para garantir a segurança da sua conta
           </p>
         </div>
-        <button type="submit" class="flex justify-center items-center px-4 py-2 text-sm font-medium rounded-md bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+        <button type="submit" class="flex justify-center items-center px-4 py-2 text-sm font-medium rounded-md bg-red-600 text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
           Continuar
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
         </button>
@@ -57,7 +57,7 @@
                 v-model="channel" 
                 name="channel"
                 disabled
-                class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300"
               />
               <label for="sms" class="flex items-center cursor-pointer ml-2 text-sm text-gray-700">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
@@ -71,7 +71,7 @@
                 value="whatsapp" 
                 v-model="channel" 
                 name="channel"
-                class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300"
               />
               <label for="whatsapp" class="flex items-center cursor-pointer ml-2 text-sm text-gray-700">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
@@ -82,7 +82,7 @@
         </div>
         <button 
           type="submit" 
-          class="flex justify-center items-center px-4 py-2 text-sm font-medium rounded-md bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed" 
+          class="flex justify-center items-center px-4 py-2 text-sm font-medium rounded-md bg-red-600 text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed" 
           :disabled="loading"
         >
           <template v-if="loading">
@@ -96,7 +96,7 @@
         </button>
         <button 
           type="button" 
-          class="flex justify-center items-center px-4 py-2 text-sm font-medium rounded-md bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          class="flex justify-center items-center px-4 py-2 text-sm font-medium rounded-md bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
           @click="step = Step.PHONE_INPUT"
         >
           Voltar
@@ -113,7 +113,7 @@
             placeholder="123456"
             v-model="code"
             required
-            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-center text-lg tracking-widest"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 text-center text-lg tracking-widest"
             maxlength="6"
           />
           <p class="text-xs text-gray-500">
@@ -122,7 +122,7 @@
         </div>
         <button 
           type="submit" 
-          class="flex justify-center items-center px-4 py-2 text-sm font-medium rounded-md bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed" 
+          class="flex justify-center items-center px-4 py-2 text-sm font-medium rounded-md bg-red-600 text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed" 
           :disabled="loading"
         >
           <template v-if="loading">
@@ -136,7 +136,7 @@
         </button>
         <button 
           type="button" 
-          class="flex justify-center items-center px-4 py-2 text-sm font-medium rounded-md bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          class="flex justify-center items-center px-4 py-2 text-sm font-medium rounded-md bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
           @click="step = Step.CHANNEL_SELECTION"
         >
           Voltar
@@ -156,7 +156,7 @@
         </p>
         <button 
           type="button" 
-          class="w-full flex justify-center items-center px-4 py-2 text-sm font-medium rounded-md bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          class="w-full flex justify-center items-center px-4 py-2 text-sm font-medium rounded-md bg-red-600 text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
           @click="handleReset"
         >
           Concluir

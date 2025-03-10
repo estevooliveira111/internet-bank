@@ -1,7 +1,7 @@
 <template>
   <button
     :disabled="load"
-    class="btn hover:border-primary border-gray-200 focus:border-gray-400 focus:outline-primary bg-primary hover:bg-blue-700 disabled:bg-primary"
+    class="btn hover:border-primary border-gray-200 focus:border-gray-400 focus:outline-primary bg-primary hover:bg-red-700 disabled:bg-primary"
     :class="load ? 'btn-disabled' : ''"
   >
     <span v-if="!load" class="text-white">{{ text }}</span>
