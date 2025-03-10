@@ -23,18 +23,18 @@ AcessAPI.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
 
-    if (token) {
-      if (isTokenExpired()) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('expires_at');
-        router.push('/login');
-        return Promise.reject(new Error('Sessão expirada. Faça login novamente.'));
-      }
+    // if (token) {
+    //   if (isTokenExpired()) {
+    //     localStorage.removeItem('token');
+    //     localStorage.removeItem('expires_at');
+    //     router.push('/login');
+    //     return Promise.reject(new Error('Sessão expirada. Faça login novamente.'));
+    //   }
 
-      config.headers.Authorization = `Bearer ${token}`;
-    } else {
-      router.push('/login');
-    }
+    //   config.headers.Authorization = `Bearer ${token}`;
+    // } else {
+    //   router.push('/login');
+    // }
 
     return config;
   },

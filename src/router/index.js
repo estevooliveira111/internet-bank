@@ -252,24 +252,32 @@ const router = createRouter({
       meta: { title: 'Resetar Senha' },
       name: 'reset-password',
       component: () => import('../views/ResetPasswordView.vue')
-    }, {
-      path: '/boleto',
-      beforeEnter: Auth,
-      meta: { title: 'Boleto' },
-      name: 'boleto',
-      component: () => import('../components/BoletoTemplate.vue')
-    }, {
-      path: '/qrcode-fixo/download',
-      beforeEnter: Auth,
-      meta: { title: 'QRCode Fixo Download' },
-      name: 'fixed-qrcode-download',
-      component: () => import('../views/FixedPixDownloadView.vue')
     },
     {
       path: '/cadastro',
       meta: { title: 'Fazer Cadastro' },
       name: 'register',
       component: () => import('../views/auth/RegisterView.vue')
+    },
+
+    {
+      path: '/cadastro/:code/phone',
+      meta: { title: 'Fazer Cadastro' },
+      name: 'register_phone_valid',
+      component: () => import('../views/auth/RegisterPhoneView.vue')
+    },
+    {
+      path: '/cadastro/:code/email',
+      meta: { title: 'Fazer Cadastro' },
+      name: 'register_email_valid',
+      component: () => import('../views/auth/RegisterEmailView.vue')
+    },
+
+    {
+      path: '/cadastro/:code/sucess',
+      meta: { title: 'Fazer Cadastro' },
+      name: 'register_email_valid',
+      component: () => import('../views/auth/RegisterSucessView.vue')
     },
 
 

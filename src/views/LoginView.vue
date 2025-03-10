@@ -1,82 +1,51 @@
 <template>
 
-  <div class="font-normal h-screen flex xl:flex-row flex-col items-center justify-center fi-body bg-primary">
+<div class="flex w-screen flex-wrap text-slate-800">
+  <div class="flex w-full flex-col md:w-1/2">
+    <div class="flex justify-center pt-12 md:justify-start md:pl-12">
+      <a href="#" class="text-2xl font-bold text-blue-600"> Wobble . </a>
+    </div>
+    <div class="my-auto mx-auto flex flex-col justify-center px-6 pt-8 md:justify-start lg:w-[28rem]">
+      <p class="text-center text-3xl font-bold md:leading-tight md:text-left md:text-5xl">
+        Welcome back <br />
+        to <span class="text-blue-600">Wobble</span>
+      </p>
+      <p class="mt-6 text-center font-medium md:text-left">Sign in to your account below.</p>
 
-    <section class="w-full flex xl:flex-row flex-col">
-      <div class="card flex flex-col items-center justify-center px-6 mx-auto md:h-screen lg:py-0">
-        <h2 class="mt-2 font-semibold text-white">Acessar minha conta</h2>
-        <h2 class="text-4xl flex text-center items-center text-white mb-2">
-          <strong>{{ theme.name }}</strong>
-        </h2>
-
-        <div class="w-full bg-white p-5 m-5 rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0">
-          <form @submit.prevent="submit" class="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <!-- ALERT -->
-            <div v-if="error" role="alert" class="alert alert-error text-white">
-              <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
-                viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span>{{ error }}</span>
-            </div>
-            <!-- END ALERT -->
-            <GeneralInput v-model="form.email" placeholder="Digite seu e-mail" id="email" type="email"
-              :isRequired="true" />
-            <PasswordInput v-model="form.password" placeholder="Digite sua senha" id="password" :isRequired="true" />
-
-            <GeneralButton text="Fazer Login" :load="load" class="w-full" />
-
-            <button onclick="reset_password.showModal()" type="button"
-              class="text-black w-full flex items-center justify-center text-sm hover:underline underline-offset-2 cursor-pointer decoration-zinc-600">
-              Esqueci minha senha
-            </button>
-          </form>
+      <form class="flex flex-col items-stretch pt-3 md:pt-8">
+        <div class="flex flex-col pt-4">
+          <div class="relative flex overflow-hidden rounded-md border-2 transition focus-within:border-blue-600">
+            <input type="email" id="login-email" class="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none" placeholder="Email" />
+          </div>
         </div>
-
-        <img v-if="theme.titleFull === 'cobrancaAlebank'" :src="theme.logo" class="w-1/4" alt="logo-doarpay" />
-        <img v-else :src="theme.logo" alt="logo-doarpay" />
-
-      </div>
-    </section>
-
-  </div>
-
-  <dialog id="reset_password" ref="reset_password" class="modal modal-bottom sm:modal-middle">
-    <div class="modal-box">
-      <form method="dialog">
-        <button id="clone-btn"
-          class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 focus:outline-primary">✕</button>
+        <div class="mb-4 flex flex-col pt-4">
+          <div class="relative flex overflow-hidden rounded-md border-2 transition focus-within:border-blue-600">
+            <input type="password" id="login-password" class="w-full flex-shrink appearance-none border-gray-300 bg-white py-2 px-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none" placeholder="Password" />
+          </div>
+        </div>
+        <a href="#" class="mb-6 text-center text-sm font-medium text-gray-600 md:text-left">Forgot password?</a>
+        <button type="submit" class="rounded-lg bg-blue-600 px-4 py-2 text-center text-base font-semibold text-white shadow-md outline-none ring-blue-500 ring-offset-2 transition hover:bg-blue-700 focus:ring-2 md:w-32">Sign in</button>
       </form>
-
-      <h3 class="font-bold text-lg">Esqueceu sua senha?</h3>
-      <div v-if="isResetLinkSent">
-        <p class="py-2 text-gray-600">Não se preocupe, insira seu endereço de e-mail e enviaremos um link para que você
-          possa redefini-la</p>
-        <form @submit.prevent="submitResetPassword" class="space-y-4 md:space-y-6 mt-4">
-          <GeneralInput v-model="resetPasswordForm.email" placeholder="Digite seu e-mail" id="email-verification"
-            type="email" :isRequired="true" />
-          <GeneralButton text="Enviar link" :load="load" class="w-full" />
-        </form>
-      </div>
-
-      <div v-else class="pt-6">
-        <p>Um link foi enviado para o seu e-mail</p>
-        <div class="flex justify-between items-center mt-10">
-          <button @click="isResetLinkSent = !isResetLinkSent" type="button"
-            class="btn hover:border-primary text-white border-gray-200 focus:border-gray-400 focus:outline-primary bg-primary hover:bg-blue-700 disabled:bg-primary">
-            <Icon icon="iconamoon:arrow-left-2" class="w-5 h-5" />
-            Voltar
-          </button>
-          <button type="button" @click="submitResetPassword"
-            class="text-gray-600 flex items-center justify-center hover:underline underline-offset-2 cursor-pointer decoration-zinc-600">
-            Reenviar link
-          </button>
-        </div>
+      <div class="py-12 text-center">
+        <p class="text-gray-600">
+          Don't have an account?
+          <router-link :to="{name: 'register'}" class="whitespace-nowrap font-semibold text-gray-900 underline underline-offset-4">Sign up for free.</router-link>
+        </p>
       </div>
     </div>
-  </dialog>
+  </div>
+  <div class="relative hidden h-screen select-none bg-blue-600 bg-gradient-to-br md:block md:w-1/2">
+    <div class="py-16 px-8 text-white xl:w-[40rem]">
+      <span class="rounded-full bg-white px-3 py-1 font-medium text-blue-600">New Feature</span>
+      <p class="my-6 text-3xl font-semibold leading-10">Create animations with <span class="abg-white whitespace-nowrap py-2 text-cyan-300">drag and drop</span>.</p>
+      <p class="mb-4">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt necessitatibus nostrum repellendus ab totam.</p>
+      <a href="#" class="font-semibold tracking-wide text-white underline underline-offset-4">Learn More</a>
+    </div>
+    <img class="ml-8 w-11/12 max-w-lg rounded-lg object-cover" src="https://componentland.com/images/aaFKzowNcgxqSdxMw11na.png" />
+  </div>
+</div>
 
+  
 </template>
 
 <script>

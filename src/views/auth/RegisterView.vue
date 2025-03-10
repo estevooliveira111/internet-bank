@@ -1,83 +1,115 @@
-
 <template>
-    <div :style="{ background: theme().primary }" class="min-h-screen flex items-center justify-center p-4">
-        <div class="w-full max-w-md bg-white bg-opacity-20 backdrop-blur-lg rounded-3xl shadow-xl overflow-hidden">
-            <div class="p-8">
-                <h2 class="text-4xl font-bold text-white mb-6 text-center">Cadastro</h2>
-                <form @submit.prevent="handleSubmit">
-                    <div class="space-y-6">
-                        <InputField v-model="formData.name" id="name" type="text" icon="User" placeholder="Nome" />
-                        <InputField v-model="formData.email" id="email" type="email" icon="Mail" placeholder="Email" />
-                        <InputField v-model="formData.document" id="document" type="text" icon="FileText"
-                            placeholder="CPF/CNPJ" />
-                        <InputField v-model="formData.password" id="password" type="password" icon="Lock"
-                            placeholder="Senha" />
-                        <InputField v-model="formData.phone" id="phone" type="tel" icon="Phone"
-                            placeholder="Telefone" />
+
+    <div class="bg-white w-screen font-sans text-gray-900">
+
+        <div class="mx-auto w-full sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl">
+            <div class="mx-2 py-12 text-center md:mx-auto md:w-2/3">
+                <h1 class="mb-4 text-3xl font-black leading-4 sm:text-5xl xl:text-6xl">Inscrever-se</h1>
+                <div class="text-lg sm:text-xl">
+                    <div class="">
+                        <p class="mb-4">Vamos fazer isso! Comece seu teste gratuito preenchendo nosso formulário simples
+                            abaixo. Você receberá notícias nossas em breve!</p>
                     </div>
-                    <button type="submit"
-                        class="w-full bg-purple-600 text-white rounded-full py-3 px-6 mt-8 hover:bg-purple-700 transition duration-300 ease-in-out transform hover:scale-105">
-                        Cadastrar
-                    </button>
-                </form>
+                </div>
             </div>
         </div>
+
+        <div
+            class="md:w-2/3 mx-auto w-full pb-16 sm:max-w-screen-sm md:max-w-screen-md lg:w-1/3 lg:max-w-screen-lg xl:max-w-screen-xl">
+            <form @submit.prevent="handleSubmit" class="shadow-lg mb-4 rounded-lg border border-gray-100 py-10 px-8">
+
+                <div class="mb-4"><label class="mb-2 block text-sm font-bold" for="name">Nome</label>
+                    <InputText size="large" class="w-full" id="name" type="name" required v-model="formData.name" />
+                </div>
+
+                <div class="mb-4"><label class="mb-2 block text-sm font-bold" for="email">Email</label>
+                    <InputText size="large" class="w-full" id="email" type="email" required v-model="formData.email" />
+                </div>
+
+                <div class="mb-4"><label class="mb-2 block text-sm font-bold" for="phone">Telefone</label>
+                    <InputText size="large" class="w-full" id="phone" type="phone" required v-model="formData.phone" />
+                </div>
+
+                <div class="mb-4"><label class="mb-2 block text-sm font-bold" for="document">Documento</label>
+                    <InputText size="large" class="w-full" id="document" type="document" required
+                        v-model="formData.document" />
+                </div>
+
+                <div class="mb-6">
+                    <label class="mb-2 flex text-sm">
+                        <Checkbox v-model="formData.term" binary size="large" type="checkbox" name="accept" class="mr-2"
+                            required />
+                        <div class="text-gray-800">
+                            <p class="">
+                                Aceito os
+                                <a href="#" class="cursor-pointer text-primary underline">termos de uso</a>
+                                e
+                                <a href="#" class="cursor-pointer text-primary underline">política de privacidade</a>
+                            </p>
+                        </div>
+                    </label>
+                </div>
+                <div class="flex items-center">
+                    <div class="flex-1"></div>
+                    <Button :loading="loading" type="submit">Criar Conta</Button>
+                </div>
+            </form>
+        </div>
     </div>
+
+
+
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import { theme } from '../../services/Thema'
-import InputField from './InputField.vue' // Componentização dos campos de input
-import axios from 'axios' // Importando o axios
+import axios from 'axios'
+import { InputText, Button, Checkbox } from 'primevue'
+import { Router } from 'lucide-vue-next';
+import { RouterLink, useRouter } from 'vue-router';
+import { AcessAPI } from '../../boot/API';
 
+const router = useRouter();
+const loading = ref(false);
 const formData = ref({
     name: '',
     email: '',
     document: '',
     password: '',
-    phone: ''
+    phone: '',
+    term: false
 })
 
 const handleSubmit = async () => {
+    loading.value = true;
     try {
-        const response = await axios.post('https://api.fastgivemoney.com/access/account-register', {
+        const {data} = await AcessAPI.post('access/register', {
             name: formData.value.name,
             email: formData.value.email,
             document: formData.value.document,
             password: formData.value.password,
             phone: formData.value.phone
         });
-        console.log('Resposta da API:', response.data);
-        alert('Cadastro realizado com sucesso!');
-        
-        // Limpa os campos do formulário
-        // Object.keys(formData.value).forEach(key => formData.value[key] = '');
+        console.log('Resposta da API:', data);
+
+        router.push({name: 'register_phone_valid', params: {code: data.data.id}});
     } catch (error) {
         console.error('Erro ao cadastrar:', error);
-
-        // Verifica se o erro é uma resposta da API
         if (error.response) {
-            // O servidor respondeu com um código de status que não está no intervalo de 2xx
+
             console.error('Dados da resposta do erro:', error.response.data);
             alert(`Erro: ${error.response.data.message || 'Ocorreu um erro ao cadastrar. Tente novamente.'}`);
         } else if (error.request) {
-            // A requisição foi feita, mas não houve resposta
+
             console.error('Nenhuma resposta recebida:', error.request);
             alert('Erro: Nenhuma resposta do servidor. Verifique sua conexão e tente novamente.');
         } else {
-            // Algo aconteceu ao configurar a requisição
+
             console.error('Erro ao configurar a requisição:', error.message);
             alert(`Erro: ${error.message}`);
         }
+    } finally{
+        loading.value = false;
     }
 }
 </script>
-
-<style>
-input:focus+label,
-input:not(:placeholder-shown)+label {
-    transform: translateY(-2.5rem) scale(0.8);
-    color: white;
-}
-</style>
