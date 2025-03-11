@@ -23,7 +23,8 @@
     { "ref": "661fe87a-44d2-4168-8f02-07b5ddb00db7", "host": "bankbandec.com.br" },
     { "ref": "661fe87a-44d2-4168-8f02-07b5ddb00db7", "host": "bandec.stric.com.br" },
     { "ref": "e6b2330e-28b4-4d56-a997-76646df074b6", "host": "tst.stric.com.br" },
-    { "ref": "e6b2330e-28b4-4d56-a997-76646df074b6", "host": "bank.stric.com.br" }
+    { "ref": "e6b2330e-28b4-4d56-a997-76646df074b6", "host": "bank.stric.com.br" },
+    { "ref": "661fe87a-44d2-4168-8f02-07b5ddb00db7", "host": "internet-bank.vercel.app" }
   ]
 }
 
