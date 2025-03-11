@@ -13,6 +13,7 @@ import { api, parseError } from '../../lib/axios'
 import { documentFormat } from '../../utils/document-format'
 import { numberToCurrent } from '../../utils/number-to-currency'
 
+
 export interface PaymentData {
   allowChangeTotalValue: boolean
   allowPartialPayment: boolean
@@ -40,6 +41,12 @@ export interface PaymentData {
   enableMP: boolean
   slipConsultTime: string
   type: string
+
+  digitableLine: string;
+  beneficiary: string;
+  dueDate: string;
+  payer: string;
+  documentPayer: string;
 }
 
 export function Payment() {
