@@ -1,50 +1,37 @@
 /** @type {import('tailwindcss').Config} */
-
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{vue,js,ts,jsx,tsx}",
-  ],
-  plugins: [require("daisyui"), require("@tailwindcss/typography")],
-  darkTheme: false,
-  darkMode: "false",
-  themeRoot: ":root",
-  daisyui: {
-    base: true,
-    themes: [
-      {
-        "doarPay": {
-          "primary": "#076DF2",
-          "secondary": "#52525b",
-          "error": "#b91c1c",
-        },
-        "cobranca": {
-          "primary": "#010812",
-          "secondary": "#52525b",
-          "error": "#b91c1c",
-        },
-        "cobrancaAlebank": {
-          "primary": "#101d4d",
-          "secondary": "#52525b",
-          "error": "#b91c1c",
-        },
-        "sandbox": {
-          "primary": "#9a3412",
-          "secondary": "#ea580c",
-          "error": "#b91c1c",
-        },
-        "univolter": {
-          "primary": "#001235",
-          "secondary": "#ea580c",
-          "error": "#b91c1c",
-        }
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  theme: {
+    extend: {
+      colors: {
+        'main-red': 'var(--red)',
+        primary: 'var(--primary)',
+        'main-gray': 'var(--gray)',
+        'tx-primary': 'var(--text-primary)',
+        'dark-blue': '#142249',
+        'main-white': 'var(--white)',
+        'gray-light': 'var(--gray-light)',
+        'main-semibold': 'var(--semi-bold)',
+        background: 'var(--background)',
+        'gray-dark': '#777986',
+        'main-green': 'var(--green)',
+        'brand-bg': 'var(--brand-background)',
       },
-      "doarPay",
-      "cobranca",
-      "univolter",
-      "cobrancaAlebank",
-    ],
+      fontWeight: {
+        light: 'var(--light)',
+        regular: 'var(--regular)',
+        semibold: 'var(--semiBold)',
+        bold: 'var(--bold)',
+      },
+      screens: {
+        laptop: '1024px',
+        desktop: '1280px',
+      },
+      width: {
+        table: 'calc(100vw - 64px)',
+        'table-md': 'calc(100vw - 64px - 256px)',
+      },
+    },
   },
-
-  logs: true,
+  plugins: [],
 }
