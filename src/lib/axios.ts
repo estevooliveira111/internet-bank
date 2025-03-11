@@ -1,7 +1,7 @@
 import axios, { isAxiosError } from 'axios'
 
 const api = axios.create({
-  baseURL: 'https://production.stric.com.br/banking',
+  baseURL: import.meta.env.VITE_API_URL,
   // baseURL: 'http://localhost:3333/banking',,
 })
 
