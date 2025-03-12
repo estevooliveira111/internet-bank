@@ -245,10 +245,8 @@ export function DepositQrCode() {
           onSubmit={handleSubmit}
         >
           <div className="max-w-sm">
-            <img src={`${data?.qrcode}`} alt="Imagem" />
-          </div>
-          <div className="mt-4 break-all">{data?.emv}</div>
-          <div className="mt-4 flex max-w-[492px] flex-row justify-between">
+            <img src={data?.qrcode} alt="Imagem" />
+            <div className="mt-4 break-all">{data?.emv}</div>
             <CopyToClipboard
               text={data?.emv || ''}
               onCopy={() => {
@@ -270,6 +268,10 @@ export function DepositQrCode() {
               />
             </CopyToClipboard>
           </div>
+          {/* 
+          <div className="mt-4 flex max-w-[492px] flex-row justify-between">
+            
+          </div> */}
         </form>
       )}
     </div>
