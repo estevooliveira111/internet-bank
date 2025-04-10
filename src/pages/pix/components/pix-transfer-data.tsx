@@ -1,23 +1,23 @@
-import { FormEvent } from 'react'
-import IntlCurrencyInput from 'react-intl-currency-input'
+import { FormEvent } from "react";
+import IntlCurrencyInput from "@/components/input/react-intl-currency-input/IntlCurrencyInput";
 
-import { documentFormat } from '@utils/document-format'
-import { dateFormatWithHours } from '@utils/date-format'
-import { addHyphenBeforePenultimateChar } from '@utils/format-account'
+import { documentFormat } from "@utils/document-format";
+import { dateFormatWithHours } from "@utils/date-format";
+import { addHyphenBeforePenultimateChar } from "@utils/format-account";
 
 interface Props {
-  value: number
-  agency: string
-  number: string
-  payerKey: string
-  document: string
-  bankName: string
-  accountName: string
+  value: number;
+  agency: string;
+  number: string;
+  payerKey: string;
+  document: string;
+  bankName: string;
+  accountName: string;
   handleChange: (
     event: FormEvent<Element>,
     value: number,
     maskedValue: string,
-  ) => void
+  ) => void;
 }
 
 export function PixTransferData({
@@ -72,12 +72,12 @@ export function PixTransferData({
           currency="BRL"
           className="text-lg"
           config={{
-            locale: 'pt-BR',
+            locale: "pt-BR",
             formats: {
               number: {
                 BRL: {
-                  style: 'currency',
-                  currency: 'BRL',
+                  style: "currency",
+                  currency: "BRL",
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2,
                 },
@@ -93,5 +93,5 @@ export function PixTransferData({
         />
       </div>
     </div>
-  )
+  );
 }

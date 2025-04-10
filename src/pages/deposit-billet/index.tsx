@@ -1,6 +1,6 @@
 import { FormEvent, useState } from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import IntlCurrencyInput from 'react-intl-currency-input'
+import IntlCurrencyInput from '@/components/input/react-intl-currency-input/IntlCurrencyInput'
 import { useNavigate } from 'react-router-dom'
 import { Button } from '../../components/button'
 import { ArrowLeftIcon } from '../../components/icons/arrow-left'
@@ -220,7 +220,7 @@ export function DepositBillet() {
                     },
                   },
                 }}
-                value={maskedValue}
+                value={Number(maskedValue)}
                 disabled={true}
                 onChange={(
                   event: FormEvent<Element>,

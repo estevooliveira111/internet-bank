@@ -1,105 +1,105 @@
-import axios from 'axios'
-import { useEffect, useState } from 'react'
-import InputMask from 'react-input-mask'
-import { Link, useNavigate, useParams } from 'react-router-dom'
-import { ArrowLeftIcon } from '../../../components/icons/arrow-left'
-import { Loading } from '../../../components/loading'
-import { useAuth } from '../../../hooks/auth'
-import { useNotification } from '../../../hooks/notification'
-import { api, parseError } from '../../../lib/axios'
-import OnBoardingStep from '../step'
+import axios from "axios";
+import { useEffect, useState } from "react";
+import InputMask from "react-input-mask";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { ArrowLeftIcon } from "../../../components/icons/arrow-left";
+import { Loading } from "../../../components/loading";
+import { useAuth } from "../../../hooks/auth";
+import { useNotification } from "../../../hooks/notification";
+import { api, parseError } from "../../../lib/axios";
+import OnBoardingStep from "../step";
 
 export function OnBoardingCompanyAddress() {
-  const { user } = useAuth()
-  const navigate = useNavigate()
-  const params = useParams()
-  const { showNotification, hidden } = useNotification()
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const params = useParams();
+  const { showNotification, hidden } = useNotification();
 
-  const [zipcode, setZipcode] = useState('')
-  const [street, setStreet] = useState('')
+  const [zipcode, setZipcode] = useState("");
+  const [street, setStreet] = useState("");
 
-  const [number, setNumber] = useState('')
-  const [complement, setComplement] = useState('')
-  const [neighborhood, setNeighborhood] = useState('')
-  const [city, setCity] = useState('')
-  const [uf, setUf] = useState('')
+  const [number, setNumber] = useState("");
+  const [complement, setComplement] = useState("");
+  const [neighborhood, setNeighborhood] = useState("");
+  const [city, setCity] = useState("");
+  const [uf, setUf] = useState("");
 
-  const [errorNumber, setErrorNumber] = useState(false)
+  const [errorNumber, setErrorNumber] = useState(false);
 
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (!user) {
-      navigate('/u')
+      navigate("/u");
     }
-  }, [user, navigate])
+  }, [user, navigate]);
 
   async function handleZipcode(zipcode: string) {
     try {
       const { data } = await axios.get(
         `https://viacep.com.br/ws/${zipcode}/json/`,
-      )
+      );
 
-      setStreet(data?.logradouro || '')
-      setZipcode(zipcode)
-      setNeighborhood(data?.bairro || '')
-      setCity(data?.localidade || '')
-      setUf(data?.uf || '')
+      setStreet(data?.logradouro || "");
+      setZipcode(zipcode);
+      setNeighborhood(data?.bairro || "");
+      setCity(data?.localidade || "");
+      setUf(data?.uf || "");
     } catch {}
   }
 
   useEffect(() => {
-    const zp = zipcode.replace(/[-,_]/g, '')
+    const zp = zipcode.replace(/[-,_]/g, "");
     if (zp.length === 8) {
-      handleZipcode(zp)
+      handleZipcode(zp);
     }
-  }, [zipcode])
+  }, [zipcode]);
 
   async function handleNextStep() {
     try {
-      hidden()
-      setErrorNumber(false)
+      hidden();
+      setErrorNumber(false);
       if (!zipcode || !street || !neighborhood || !city || !uf) {
         showNotification({
-          type: 'error',
-          title: 'Erro ao continuar.',
-          message: 'Preencha todos os campos.',
-        })
-        return
+          type: "error",
+          title: "Erro ao continuar.",
+          message: "Preencha todos os campos.",
+        });
+        return;
       }
 
       if (!number) {
-        setErrorNumber(true)
+        setErrorNumber(true);
         showNotification({
-          type: 'error',
-          title: 'Erro ao continuar.',
-          message: 'O número é obrigatório.',
-        })
-        return
+          type: "error",
+          title: "Erro ao continuar.",
+          message: "O número é obrigatório.",
+        });
+        return;
       }
 
-      setLoading(true)
+      setLoading(true);
       await api.post(`/company-address/${params.id}`, {
-        address_type: 'OFFICE',
-        zip_code: zipcode.replace(/[-,_]/g, ''),
+        address_type: "OFFICE",
+        zip_code: zipcode.replace(/[-,_]/g, ""),
         state: uf.toUpperCase(),
         city,
         neighborhood,
         street,
         number,
         complement,
-      })
+      });
 
-      navigate('/u/onboarding/analysis')
+      navigate("/u/onboarding/company-document/" + params.id);
     } catch (err) {
-      const error = parseError(err)
+      const error = parseError(err);
       showNotification({
-        type: 'error',
-        title: 'Erro ao continuar.',
+        type: "error",
+        title: "Erro ao continuar.",
         message: error.message,
-      })
+      });
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
 
@@ -117,7 +117,7 @@ export function OnBoardingCompanyAddress() {
 
               <div className="mt-20 pl-4 pr-4 md:pl-20 md:pr-20">
                 <h1 className="color-tx-primary text-3xl font-thin">
-                  Você está a poucos passos de <br /> uma nova{' '}
+                  Você está a poucos passos de <br /> uma nova{" "}
                   <span className="font-semibold">experiência financeira</span>
                 </h1>
                 <div className="my-4 h-[4px] w-[42px] bg-primary" />
@@ -169,7 +169,7 @@ export function OnBoardingCompanyAddress() {
                   <div className="flex flex-row gap-4">
                     <div
                       className={`mb-6 flex flex-1 flex-col rounded-md border border-main-gray px-3 pb-1.5 pt-2.5 shadow-sm ring-0 ${
-                        errorNumber ? 'border-red-400' : ''
+                        errorNumber ? "border-red-400" : ""
                       }`}
                     >
                       <label
@@ -282,5 +282,5 @@ export function OnBoardingCompanyAddress() {
         </div>
       </div>
     </>
-  )
+  );
 }

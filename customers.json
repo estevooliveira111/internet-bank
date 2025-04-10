@@ -9,7 +9,6 @@
     { "ref": "e48c3743-4882-4949-933f-9576c350c98c", "host": "mhetabank.stric.com.br"},
     { "ref": "e48c3743-4882-4949-933f-9576c350c98c", "host": "methabank.stric.com.br"},
     { "ref": "3056c1ff-d810-441e-91bf-68db027cbd03", "host": "alfbank.stric.com.br" },
-    { "ref": "228659bd-68e0-4ceb-9e3f-7a02c1bc003a", "host": "nobe.stric.com.br" },
     { "ref": "032675fb-68e1-4709-b255-e3a5d8c4b5df", "host": "educacaobankconta.com.br" },
     { "ref": "7eb303d6-f33b-4a39-a056-405e76aac8dd", "host": "genesiscontacorrente.com.br" },
     { "ref": "58446b19-c24d-4654-89f4-2932ff7ea530", "host": "bwgbank.com.br" },
@@ -22,9 +21,12 @@
     { "ref": "8a15274a-b985-4f15-857f-9952eb013445", "host": "fncbank.stric.com.br" },
     { "ref": "661fe87a-44d2-4168-8f02-07b5ddb00db7", "host": "bankbandec.com.br" },
     { "ref": "661fe87a-44d2-4168-8f02-07b5ddb00db7", "host": "bandec.stric.com.br" },
+    { "ref": "e7345077-bfe4-40b0-bcd0-3a563b86b170", "host": "zixbank.stric.com.br" },
+    { "ref": "e7345077-bfe4-40b0-bcd0-3a563b86b170", "host": "msmbank.stric.com.br" },
+    { "ref": "e7345077-bfe4-40b0-bcd0-3a563b86b170", "host": "banorb.stric.com.br" },
+    { "ref": "f06dde70-d600-406e-8f1b-5f8cfd660c46", "host": "ib.allbankinvest.com.br" },
+    { "ref": "6f140fa7-64ca-4d1c-8a5b-50fc3f98dd62", "host": "ativobanking.com.br" },
     { "ref": "e6b2330e-28b4-4d56-a997-76646df074b6", "host": "tst.stric.com.br" },
-    { "ref": "e6b2330e-28b4-4d56-a997-76646df074b6", "host": "bank.stric.com.br" },
-    { "ref": "661fe87a-44d2-4168-8f02-07b5ddb00db7", "host": "internet-bank.vercel.app" }
+    { "ref": "e6b2330e-28b4-4d56-a997-76646df074b6", "host": "bank.stric.com.br" }
   ]
 }
-

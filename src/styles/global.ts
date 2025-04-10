@@ -21,7 +21,7 @@ export const GlobalStyle = createGlobalStyle`
         --green: #49D294;
         --red: #E74C3C;
 
-        --brand-background-dark: #0E1833; // DEFINIR
+        --brand-background-dark: ${({ theme }) => theme.background};
         --brand-background-alternative: rgba(255, 255, 255, .05);
         --background: #F7F6F8;
 

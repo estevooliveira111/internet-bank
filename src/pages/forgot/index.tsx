@@ -14,6 +14,7 @@ import {
   InputPassword,
   Line,
   NotHaveAnAccount,
+  // NotHaveAnAccount,
   Reference,
   Separator,
   Title,
@@ -128,13 +129,11 @@ export function Forgot() {
           </WrapperForm>
           <ForgetPassword to="/u">Voltar para o Login</ForgetPassword>
           <Line />
-          {customer.display_name !== 'Moncoc Bank' &&
-            customer.display_name !== 'Stric' &&
-            customer.display_name !== 'Umbank' && (
-              <NotHaveAnAccount to="/u/account-type">
-                Não tem uma conta? Abrir conta {customer.display_name}
-              </NotHaveAnAccount>
-            )}
+          {customer.display_name === 'AllBank Invest' && (
+            <NotHaveAnAccount to="/u/account-type">
+              Não tem uma conta? Abrir conta {customer.display_name}
+            </NotHaveAnAccount>
+          )}
         </Content>
       </WrapperContent>
     </Container>

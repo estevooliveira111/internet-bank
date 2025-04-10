@@ -14,6 +14,7 @@ export interface PixKey {
   createdAt: number
   key: string
   type: string
+  updated_at: string
 }
 
 export interface Output {

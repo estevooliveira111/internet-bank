@@ -42,7 +42,8 @@ export function SignInToken() {
         user.step === 'WAITING_DOCUMENTS' ||
         user.step === 'WAITING_DOCUMENTS_SELFIE' ||
         user.step === 'WAITING_DOCUMENTS_FRONT' ||
-        user.step === 'WAITING_DOCUMENTS_BACK'
+        user.step === 'WAITING_DOCUMENTS_BACK' ||
+        user.step === 'RESEND_DOCUMENTS'
       ) {
         navigate('/u/onboarding/documents')
       } else if (user.step === 'WAITING_COMPANY_DATA') {

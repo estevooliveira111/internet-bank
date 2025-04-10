@@ -17,7 +17,6 @@ export interface Transaction {
   agency: string
   account: string
   date: string
-  credit?: boolean
 }
 
 export function getDescription(transaction: Transaction) {

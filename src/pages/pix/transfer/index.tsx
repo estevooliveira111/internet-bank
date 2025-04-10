@@ -1,18 +1,18 @@
-import { FormEvent } from 'react'
-import IntlCurrencyInput from 'react-intl-currency-input'
+import { FormEvent } from "react";
 
-import { Input } from '@components/input'
-import { Button } from '@components/button'
-import { InputSelect } from '@components/input/selected'
-import { ArrowLeftIcon } from '@components/icons/arrow-left'
+import { Input } from "@components/input";
+import { Button } from "@components/button";
+import { InputSelect } from "@components/input/selected";
+import { ArrowLeftIcon } from "@components/icons/arrow-left";
 
-import { PasswordInput } from '@components/pix/password-input'
-import { PixTransferReceipt } from '@pages/pix/components/pix-transfer-receipt'
-import { usePixTransfer } from '@pages/pix/transfer/use-pix-transfer-controller'
+import { PasswordInput } from "@components/pix/password-input";
+import { PixTransferReceipt } from "@pages/pix/components/pix-transfer-receipt";
+import { usePixTransfer } from "@pages/pix/transfer/use-pix-transfer-controller";
 
-import { documentFormat } from '@utils/document-format'
-import { dateFormatWithHours } from '@utils/date-format'
-import { addHyphenBeforePenultimateChar } from '@utils/format-account'
+import { documentFormat } from "@utils/document-format";
+import { dateFormatWithHours } from "@utils/date-format";
+import { addHyphenBeforePenultimateChar } from "@utils/format-account";
+import IntlCurrencyInput from "@/components/input/react-intl-currency-input/IntlCurrencyInput";
 
 export function PixTransfer() {
   const {
@@ -40,21 +40,21 @@ export function PixTransfer() {
     typeKey,
     userAccount,
     value,
-  } = usePixTransfer()
+  } = usePixTransfer();
 
   return (
     <div className="h-full min-h-screen p-8">
       <div className="mb-6 flex items-center ">
         <div
           onClick={() => {
-            step === 1 ? handleBack() : setStep(1)
+            step === 1 ? handleBack() : setStep(1);
           }}
           className="mr-4 flex h-10 w-10 cursor-pointer items-center justify-center rounded bg-white hover:opacity-80"
         >
           <ArrowLeftIcon color="var(--primary)" width={10} />
         </div>
         <h1 className="text-2xl text-tx-primary">
-          {step === 1 ? 'Dados do favorecido' : 'Confirme e transfira'}
+          {step === 1 ? "Dados do favorecido" : "Confirme e transfira"}
         </h1>
       </div>
       {step === 1 && (
@@ -66,11 +66,11 @@ export function PixTransfer() {
             <InputSelect
               label="Tipo de chave"
               options={[
-                { id: 'evp', name: 'Chave Aleatória', hidden: 'EVP' },
-                { id: 'cpf', name: 'CPF', hidden: 'CPF' },
-                { id: 'cnpj', name: 'CNPJ', hidden: 'CNPJ' },
-                { id: 'email', name: 'E-mail', hidden: 'E-mail' },
-                { id: 'phone', name: 'Celular', hidden: 'Celular' },
+                { id: "evp", name: "Chave Aleatória", hidden: "EVP" },
+                { id: "cpf", name: "CPF", hidden: "CPF" },
+                { id: "cnpj", name: "CNPJ", hidden: "CNPJ" },
+                { id: "email", name: "E-mail", hidden: "E-mail" },
+                { id: "phone", name: "Celular", hidden: "Celular" },
               ]}
               selected={typeKey}
               onChange={setTypeKey}
@@ -88,13 +88,14 @@ export function PixTransfer() {
           </div>
 
           <Button
-            title={step === 1 ? 'Próximo' : 'Transferir'}
+            title={step === 1 ? "Próximo" : "Transferir"}
             type="submit"
             disabled={loading}
             loading={loading}
           />
         </form>
       )}
+
       {step === 2 && (
         <form onSubmit={handleSubmit} className="md:max-w-[620px]">
           <div className='className="inline-flex min-w-full flex-col rounded-md rounded-bl-none rounded-br-none bg-[#eaeaea] p-6 md:min-w-[520px]'>
@@ -148,12 +149,12 @@ export function PixTransfer() {
                 currency="BRL"
                 className="text-lg"
                 config={{
-                  locale: 'pt-BR',
+                  locale: "pt-BR",
                   formats: {
                     number: {
                       BRL: {
-                        style: 'currency',
-                        currency: 'BRL',
+                        style: "currency",
+                        currency: "BRL",
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
                       },
@@ -180,7 +181,7 @@ export function PixTransfer() {
 
           <div className="mt-6 flex justify-end">
             <Button
-              title={'Transferir'}
+              title={"Transferir"}
               type="submit"
               loading={loading}
               disabled={loading}
@@ -188,6 +189,7 @@ export function PixTransfer() {
           </div>
         </form>
       )}
+
       <PixTransferReceipt
         open={open}
         setOpen={setOpen}
@@ -200,5 +202,5 @@ export function PixTransfer() {
         transactionId={transactionId}
       />
     </div>
-  )
+  );
 }

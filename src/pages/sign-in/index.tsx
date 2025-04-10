@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import CpfCnpj from '@react-br-forms/cpf-cnpj-mask'
 import SignInImageDefault from '../../assets/sign-in.png'
 import SignInImageVF from '../../assets/vfbank-login.jpeg'
+import SignInImageMSMBank from '../../assets/msmbank-home.png'
 
 import {
   ButtonEyeVisibility,
@@ -15,6 +16,7 @@ import {
   InputPassword,
   Line,
   NotHaveAnAccount,
+  // NotHaveAnAccount,
   Reference,
   Separator,
   Title,
@@ -50,6 +52,12 @@ export function SignIn() {
     }
   }, [navigation, user])
 
+  useEffect(() => {
+    if (customer.display_name === 'Banorb') {
+      navigation('/u/account-type')
+    }
+  }, [customer, navigation])
+
   function handlePasswordVisibility() {
     setIsPasswordVisible((state) => !state)
   }
@@ -75,15 +83,17 @@ export function SignIn() {
     }
   }
 
+  let imageHome = SignInImageDefault
+  if (customer?.display_name === 'VF BANK DIGITAL') {
+    imageHome = SignInImageVF
+  }
+  if (customer?.display_name === 'Banco MSM') {
+    imageHome = SignInImageMSMBank
+  }
+
   return (
     <Container>
-      <WrapperBackground
-        image={
-          customer?.display_name === 'VF BANK DIGITAL'
-            ? SignInImageVF
-            : SignInImageDefault
-        }
-      />
+      <WrapperBackground image={imageHome} />
       <WrapperContent>
         <Content>
           <WrapperLogo>
@@ -91,18 +101,28 @@ export function SignIn() {
             <img
               src={customer.logo.white}
               alt={customer.display_name}
-              style={{ maxWidth: 120 }}
+              style={{
+                maxWidth: customer.display_name === 'AtivoBanking' ? 280 : 120,
+              }}
             />
           </WrapperLogo>
-          <Title>
-            Bem-vindo ao internet <br />
-            <b>
-              banking{' '}
-              {customer?.display_name !== 'VF BANK DIGITAL' && (
-                <span>da {customer.display_name}.</span>
-              )}
-            </b>
-          </Title>
+          {customer?.display_name === 'AtivoBanking' ? (
+            <Title>
+              Bem-vindo ao <br /> <b> {customer.display_name}</b>
+            </Title>
+          ) : (
+            <Title>
+              Bem-vindo ao internet <br />{' '}
+              <b>
+                {' '}
+                banking{' '}
+                {customer?.display_name !== 'VF BANK DIGITAL' && (
+                  <span>da {customer.display_name}.</span>
+                )}
+              </b>
+            </Title>
+          )}
+
           <Separator />
           <Reference>
             Preencha os campos abaixo para acessar sua conta
@@ -149,16 +169,12 @@ export function SignIn() {
           </WrapperForm>
           <ForgetPassword to="/u/forgot">Esqueci minha senha</ForgetPassword>
           <Line />
-          {customer.display_name !== 'Moncoc Bank' &&
-            customer.display_name !== 'Stric' &&
-            customer.display_name !== 'Umbank' && (
-              <NotHaveAnAccount to="/u/account-type">
-                Não tem uma conta? Abrir conta{' '}
-                {customer?.display_name !== 'VF BANK DIGITAL' && (
-                  <span>{customer.display_name}</span>
-                )}
-              </NotHaveAnAccount>
-            )}
+          {customer.display_name === 'AllBank Invest' && (
+            <NotHaveAnAccount to="/u/account-type">
+              Não tem uma conta? Abrir conta{' '}
+              <span>{customer.display_name}</span>
+            </NotHaveAnAccount>
+          )}
         </Content>
       </WrapperContent>
     </Container>

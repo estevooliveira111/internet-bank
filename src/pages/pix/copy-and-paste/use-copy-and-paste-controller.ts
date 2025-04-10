@@ -53,6 +53,7 @@ export function usePixCopyAndPaste(): Output {
   const [pixCopyAndPasteCode, setPixCopyAndPasteCode] = useState('')
   const [value, setValue] = useState(0)
   const [, setMaskedValue] = useState('0,00')
+  const [endToEndId, setEndToEndId] = useState('')
   const [step, setStep] = useState(1)
   const [, setKey] = useState('')
   const [qrcodeData, setQrcodeData] = useState<Qrcode>({} as Qrcode)
@@ -85,7 +86,8 @@ export function usePixCopyAndPaste(): Output {
       })
       setQrcodeData(data.qrcode)
       setKey(data.qrcode.key)
-      setValue(data?.qrcode?.value / 100 || 0)
+      setValue(data?.qrcode?.amount || 0)
+      setEndToEndId(data.qrcode?.endToEndId)
       setStep(2)
     } catch (err) {
       const error = parseError(err)
@@ -127,6 +129,7 @@ export function usePixCopyAndPaste(): Output {
       const { data: response } = await api.post('/pix/transfer', {
         key: qrcodeData.key,
         amount: value,
+        endToEndId,
         pin: password,
         info: pixInfo,
       })

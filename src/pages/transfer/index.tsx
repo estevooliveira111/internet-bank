@@ -1,136 +1,136 @@
-import { FormEvent, useState } from 'react'
-import { Button } from '../../components/button'
-import { ArrowLeftIcon } from '../../components/icons/arrow-left'
-import { Input } from '../../components/input'
-import { InputSelect, SelectObject } from '../../components/input/selected'
-import { banks } from '../../utils/banks'
-import { useNavigate } from 'react-router-dom'
-import { useNotification } from '../../hooks/notification'
-import { dateFormatWithHours } from '../../utils/date-format'
-import IntlCurrencyInput from 'react-intl-currency-input'
-import { api, parseError } from '../../lib/axios'
-import { Modal } from '../../components/modal'
-import { CheckIcon } from 'lucide-react'
-import { useAuth } from '../../hooks/auth'
-import { documentFormat } from '../../utils/document-format'
+import { FormEvent, useState } from "react";
+import { Button } from "../../components/button";
+import { ArrowLeftIcon } from "../../components/icons/arrow-left";
+import { Input } from "../../components/input";
+import { InputSelect, SelectObject } from "../../components/input/selected";
+import { banks } from "../../utils/banks";
+import { useNavigate } from "react-router-dom";
+import { useNotification } from "../../hooks/notification";
+import { dateFormatWithHours } from "../../utils/date-format";
+import IntlCurrencyInput from "@/components/input/react-intl-currency-input/IntlCurrencyInput";
+import { api, parseError } from "../../lib/axios";
+import { Modal } from "../../components/modal";
+import { CheckIcon } from "lucide-react";
+import { useAuth } from "../../hooks/auth";
+import { documentFormat } from "../../utils/document-format";
 
 export function Transfer() {
-  const navigate = useNavigate()
-  const { showNotification, hidden } = useNotification()
+  const navigate = useNavigate();
+  const { showNotification, hidden } = useNotification();
 
-  const [name, setName] = useState('')
-  const [document, setDocument] = useState('')
-  const [bankSelected, setBankSelected] = useState<SelectObject>(banks[0])
-  const [agency, setAgency] = useState('')
-  const [account, setAccount] = useState('')
+  const [name, setName] = useState("");
+  const [document, setDocument] = useState("");
+  const [bankSelected, setBankSelected] = useState<SelectObject>(banks[0]);
+  const [agency, setAgency] = useState("");
+  const [account, setAccount] = useState("");
 
-  const [password, setPassword] = useState('')
+  const [password, setPassword] = useState("");
 
-  const [value, setValue] = useState(0)
-  const [maskedValue, setMaskedValue] = useState('0,00')
+  const [value, setValue] = useState(0);
+  const [maskedValue, setMaskedValue] = useState("0,00");
 
-  const [step, setStep] = useState(1)
+  const [step, setStep] = useState(1);
 
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
-  const [open, setOpen] = useState(false)
-  const { user, account: userAccount, getUser } = useAuth()
+  const [open, setOpen] = useState(false);
+  const { user, account: userAccount, getUser } = useAuth();
 
-  const [transactionId, setTransactionId] = useState('')
+  const [transactionId, setTransactionId] = useState("");
 
   function handleBack() {
-    navigate(-1)
+    navigate(-1);
   }
 
   async function handleSubmit(e: FormEvent) {
-    e.preventDefault()
-    hidden()
+    e.preventDefault();
+    hidden();
 
     if (step === 2) {
-      handleTransfer()
-      return
+      handleTransfer();
+      return;
     }
 
     if (!name || !document || !bankSelected || !agency || !account) {
       showNotification({
-        type: 'error',
-        title: 'Erro ao continuar.',
-        message: 'Todos os campos são obrigatórios.',
-      })
-      return
+        type: "error",
+        title: "Erro ao continuar.",
+        message: "Todos os campos são obrigatórios.",
+      });
+      return;
     }
 
-    if (bankSelected.id === '') {
+    if (bankSelected.id === "") {
       showNotification({
-        type: 'error',
-        title: 'Erro ao continuar.',
-        message: 'Todos os campos são obrigatórios.',
-      })
+        type: "error",
+        title: "Erro ao continuar.",
+        message: "Todos os campos são obrigatórios.",
+      });
     }
 
-    setStep(2)
+    setStep(2);
   }
 
   async function handleTransfer() {
     try {
-      hidden()
-      setLoading(true)
+      hidden();
+      setLoading(true);
       if (!value || value === 0) {
         showNotification({
-          type: 'error',
-          title: 'Erro ao continuar.',
-          message: 'É preciso informar um valor.',
-        })
-        return
+          type: "error",
+          title: "Erro ao continuar.",
+          message: "É preciso informar um valor.",
+        });
+        return;
       }
 
       if (!password || password.length !== 4) {
         showNotification({
-          type: 'error',
-          title: 'Erro ao continuar.',
-          message: 'É preciso informar a senha.',
-        })
+          type: "error",
+          title: "Erro ao continuar.",
+          message: "É preciso informar a senha.",
+        });
       }
 
-      const { data } = await api.post('transfer', {
-        accountType: 'CC',
+      const { data } = await api.post("transfer", {
+        accountType: "CC",
         bank: String(bankSelected.id),
         agency,
         account,
-        document: document.replace(/\D/g, ''),
+        document: document.replace(/\D/g, ""),
         clientName: name,
         amount: value,
-      })
-      setTransactionId(data.transaction)
-      setOpen(true)
-      setStep(1)
+      });
+      setTransactionId(data.transaction);
+      setOpen(true);
+      setStep(1);
     } catch (err) {
-      const error = parseError(err)
+      const error = parseError(err);
       showNotification({
-        type: 'error',
-        title: 'Erro ao transferir.',
+        type: "error",
+        title: "Erro ao transferir.",
         message: error.message,
-      })
+      });
     } finally {
-      setLoading(false)
+      setLoading(false);
       setTimeout(() => {
-        getUser()
-      }, 1000)
+        getUser();
+      }, 1000);
     }
   }
 
   function addHyphenBeforePenultimateChar(inputString: string): string {
-    if (typeof inputString !== 'string' || inputString.length < 2) {
-      return inputString
+    if (typeof inputString !== "string" || inputString.length < 2) {
+      return inputString;
     }
 
-    const penultimateIndex = inputString.length
+    const penultimateIndex = inputString.length;
     const modifiedString =
       inputString.slice(0, penultimateIndex - 1) +
-      '-' +
-      inputString.slice(penultimateIndex - 1)
+      "-" +
+      inputString.slice(penultimateIndex - 1);
 
-    return modifiedString
+    return modifiedString;
   }
 
   const handleChange = (
@@ -138,25 +138,25 @@ export function Transfer() {
     value: number,
     maskedValue: string,
   ) => {
-    event.preventDefault()
+    event.preventDefault();
 
-    setValue(value)
-    setMaskedValue(maskedValue)
-  }
+    setValue(value);
+    setMaskedValue(maskedValue);
+  };
 
   return (
     <div className="h-full min-h-screen p-8">
       <div className="mb-6 flex items-center ">
         <div
           onClick={() => {
-            step === 1 ? handleBack() : setStep(1)
+            step === 1 ? handleBack() : setStep(1);
           }}
           className="mr-4 flex h-10 w-10 cursor-pointer items-center justify-center rounded bg-white hover:opacity-80"
         >
           <ArrowLeftIcon color="var(--primary)" width={10} />
         </div>
         <h1 className="text-2xl text-[var(--text-primary)]">
-          {step === 1 ? 'Dados do favorecido' : 'Confirme e transfira'}
+          {step === 1 ? "Dados do favorecido" : "Confirme e transfira"}
         </h1>
       </div>
       {step === 1 && (
@@ -204,7 +204,7 @@ export function Transfer() {
           </div>
 
           <Button
-            title={step === 1 ? 'Próximo' : 'Transferir'}
+            title={step === 1 ? "Próximo" : "Transferir"}
             type="submit"
             disabled={loading}
             loading={loading}
@@ -256,12 +256,12 @@ export function Transfer() {
                 currency="BRL"
                 className="text-2xl"
                 config={{
-                  locale: 'pt-BR',
+                  locale: "pt-BR",
                   formats: {
                     number: {
                       BRL: {
-                        style: 'currency',
-                        currency: 'BRL',
+                        style: "currency",
+                        currency: "BRL",
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
                       },
@@ -308,7 +308,7 @@ export function Transfer() {
 
           <div className="mt-6 flex justify-end">
             <Button
-              title={'Transferir'}
+              title={"Transferir"}
               type="submit"
               loading={loading}
               disabled={loading}
@@ -400,8 +400,8 @@ export function Transfer() {
               type="button"
               className="inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 sm:text-sm"
               onClick={() => {
-                setOpen(false)
-                navigate('/receipt')
+                setOpen(false);
+                navigate("/receipt");
               }}
             >
               Ir para o extrato
@@ -417,5 +417,5 @@ export function Transfer() {
         </div>
       </Modal>
     </div>
-  )
+  );
 }

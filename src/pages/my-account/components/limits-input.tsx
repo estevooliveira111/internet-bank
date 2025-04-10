@@ -1,7 +1,7 @@
 import { clsx } from 'clsx'
 import { FormEvent, InputHTMLAttributes } from 'react'
 
-import IntlCurrencyInput from 'react-intl-currency-input'
+import IntlCurrencyInput from '@/components/input/react-intl-currency-input/IntlCurrencyInput'
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   title: string
@@ -14,19 +14,6 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export function LimitsInput({ title, value, handleChange, ...props }: Props) {
-  const config = {
-    locale: 'pt-BR',
-    formats: {
-      number: {
-        BRL: {
-          style: 'currency',
-          currency: 'BRL',
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        },
-      },
-    },
-  }
   return (
     <div
       className={clsx(
@@ -42,8 +29,20 @@ export function LimitsInput({ title, value, handleChange, ...props }: Props) {
       <IntlCurrencyInput
         currency="BRL"
         className="text-lg disabled:cursor-not-allowed"
-        config={config}
-        value={value}
+        config={{
+          locale: 'pt-BR',
+          formats: {
+            number: {
+              BRL: {
+                style: 'currency',
+                currency: 'BRL',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              },
+            },
+          },
+        }}
+        value={Number(value)}
         onChange={handleChange}
         disabled={props.disabled}
       />

@@ -48,7 +48,7 @@ const CreateAccountType: React.FC = () => {
               src={customer.logo.dark}
               alt={customer.name}
               style={{
-                maxWidth: '120px',
+                maxWidth: customer.name === 'Banorb' ? '200px' : '120px',
                 marginBottom: '15px',
               }}
             />

@@ -1,60 +1,66 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import { PrivateLayout } from '@/layout/private'
-import { PublicLayout } from '@/layout/public'
-import { RequireAuth } from '@/routes/auth'
+import { PrivateLayout } from "@/layout/private";
+import { PublicLayout } from "@/layout/public";
+import { RequireAuth } from "@/routes/auth";
 
-import { ChargeBillet } from '@/pages/charge-billet'
-import { MyAccount } from '@/pages/my-account'
-import { Charges } from '@/pages/charges'
-import { DepositQrCode } from '@/pages/deposit-qrcode'
-import { Fees } from '@/pages/fees'
-import { NotFound } from '@/pages/notfound'
-import { PixCopyAndPaste } from '@/pages/pix/copy-and-paste'
-import { PixKeys } from '@/pages/pix/keys'
-import { PixNewKey } from '@/pages/pix/new-key'
-import { Termos } from '@/pages/termos'
-import NewAccount from '@/pages/new-account'
-import { Transfer } from '@/pages/transfer'
-import { TransferBase } from '@/pages/transfer/base'
-import { CreateNewBeneficiary } from '@/pages/transfer/new-beneficiary'
-import { TransferOtherBanks } from '@/pages/transfer/other-banks'
-import { StricTransfer } from '@/pages/transfer/stric'
-import { Home } from '@pages/Home'
-import { DepositBillet } from '@pages/deposit-billet'
-import { DepositList } from '@pages/deposit-list'
-import { DepositTed } from '@pages/deposit-ted'
-import { Extract } from '@pages/extract'
-import { Forgot } from '@pages/forgot'
-import { CreateAccount } from '@pages/onboarding/create-account'
-import { OnBoardingAddress } from '@pages/onboarding/create-account/address'
-import { OnBoardingAnalysis } from '@pages/onboarding/create-account/analysis'
-import { OnBoardingCompany } from '@pages/onboarding/create-account/company'
-import { OnBoardingCompanyAddress } from '@pages/onboarding/create-account/company-address'
-import { OnBoardingDocument } from '@pages/onboarding/create-account/document'
-import { OnBoardingEmail } from '@pages/onboarding/create-account/email'
-import { OnBoardingIndividual } from '@pages/onboarding/create-account/individual'
-import { OnBoardingPhone } from '@pages/onboarding/create-account/phone'
-import Requirements from '@pages/onboarding/requirements'
-import CreateAccountType from '@pages/onboarding/select-account-type'
-import { Payment } from '@pages/payment'
-import { Pix } from '@pages/pix'
-import { PixTransfer } from '@/pages/pix/transfer'
-import { Receipt } from '@pages/receipt'
-import { ResetPassword } from '@pages/reset-password'
-import { SignIn } from '@pages/sign-in'
-import { SignOut } from '@pages/sign-out'
-import { SignInToken } from '@pages/sign-token'
-import { Checkout } from '@/pages/checkout'
-import { GestaoCobranca } from '@/pages/gestao-cobrancas'
-import { GestaoCobrancaClients } from '@/pages/gestao-cobrancas/clients'
-import { GestaoCobrancaInvoices } from '@/pages/gestao-cobrancas/invoices'
+import { ChargeBillet } from "@/pages/charge-billet";
+import { MyAccount } from "@/pages/my-account";
+import { Charges } from "@/pages/charges";
+import { DepositQrCode } from "@/pages/deposit-qrcode";
+import { Fees } from "@/pages/fees";
+import { NotFound } from "@/pages/notfound";
+import { PixCopyAndPaste } from "@/pages/pix/copy-and-paste";
+import { PixKeys } from "@/pages/pix/keys";
+import { PixNewKey } from "@/pages/pix/new-key";
+import { Termos } from "@/pages/termos";
+import NewAccount from "@/pages/new-account";
+import { Transfer } from "@/pages/transfer";
+import { TransferBase } from "@/pages/transfer/base";
+import { CreateNewBeneficiary } from "@/pages/transfer/new-beneficiary";
+import { TransferOtherBanks } from "@/pages/transfer/other-banks";
+import { StricTransfer } from "@/pages/transfer/stric";
+import { Home } from "@pages/Home";
+import { DepositBillet } from "@pages/deposit-billet";
+import { DepositList } from "@pages/deposit-list";
+import { DepositTed } from "@pages/deposit-ted";
+import { Extract } from "@pages/extract";
+import { Forgot } from "@pages/forgot";
+import { CreateAccount } from "@pages/onboarding/create-account";
+import { OnBoardingAddress } from "@pages/onboarding/create-account/address";
+import { OnBoardingAnalysis } from "@pages/onboarding/create-account/analysis";
+import { OnBoardingCompany } from "@pages/onboarding/create-account/company";
+import { OnBoardingCompanyAddress } from "@pages/onboarding/create-account/company-address";
+import { OnBoardingDocument } from "@pages/onboarding/create-account/document";
+import { OnBoardingEmail } from "@pages/onboarding/create-account/email";
+import { OnBoardingIndividual } from "@pages/onboarding/create-account/individual";
+import { OnBoardingPhone } from "@pages/onboarding/create-account/phone";
+import Requirements from "@pages/onboarding/requirements";
+import CreateAccountType from "@pages/onboarding/select-account-type";
+import { Payment } from "@pages/payment";
+import { Pix } from "@pages/pix";
+import { PixTransfer } from "@/pages/pix/transfer";
+import { Receipt } from "@pages/receipt";
+import { ResetPassword } from "@pages/reset-password";
+import { SignIn } from "@pages/sign-in";
+import { SignOut } from "@pages/sign-out";
+import { SignInToken } from "@pages/sign-token";
+import { Checkout } from "@/pages/checkout";
+import { GestaoCobranca } from "@/pages/gestao-cobrancas";
+import { GestaoCobrancaClients } from "@/pages/gestao-cobrancas/clients";
+import { GestaoCobrancaInvoices } from "@/pages/gestao-cobrancas/invoices";
+import { OnBoardingRejected } from "@/pages/onboarding/create-account/rejected";
+import { CreateImob } from "@/pages/onboarding/create-account/imob";
+import { CreateCorretor } from "@/pages/onboarding/create-account/corretor";
+import { OnBoardingCompanyDocument } from "@/pages/onboarding/create-account/company-document";
+import RedirectToApp from "@/pages/RedirectToApp";
 
 export function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public */}
+        {/* Redirect to app Link */}
+        <Route path="/redirect" element={<RedirectToApp />} />
         <Route path="u" element={<PublicLayout />}>
           {/* Routes */}
           <Route index element={<SignIn />} />
@@ -71,6 +77,12 @@ export function AppRoutes() {
 
           <Route path="create-account/:type" element={<CreateAccount />} />
 
+          <Route path="create-account/vfbank/imob" element={<CreateImob />} />
+          <Route
+            path="create-account/vfbank/corretor"
+            element={<CreateCorretor />}
+          />
+
           <Route path="onboarding/email" element={<OnBoardingEmail />} />
           <Route path="onboarding/phone" element={<OnBoardingPhone />} />
           <Route
@@ -86,8 +98,13 @@ export function AppRoutes() {
             path="onboarding/company-address/:id"
             element={<OnBoardingCompanyAddress />}
           />
+          <Route
+            path="onboarding/company-document/:id"
+            element={<OnBoardingCompanyDocument />}
+          />
 
           <Route path="onboarding/analysis" element={<OnBoardingAnalysis />} />
+          <Route path="onboarding/rejected" element={<OnBoardingRejected />} />
 
           <Route path="signin-token/:token" element={<SignInToken />} />
           <Route
@@ -165,5 +182,5 @@ export function AppRoutes() {
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }

@@ -6,7 +6,6 @@ import { CheckIcon } from 'lucide-react'
 import { documentFormat } from '@utils/document-format'
 
 import { PixReceiptHeader } from '@pages/pix/components/pix-receipt-header'
-import { useAuth } from '@/hooks/auth'
 
 interface Props {
   open: boolean
@@ -24,16 +23,14 @@ export function PixTransferReceipt({
   open,
   name,
   value,
-  // agency,
-  // number,
-  // bankName,
+  agency,
+  number,
+  bankName,
   docment,
   transactionId,
   setOpen,
 }: Props) {
   const navigate = useNavigate()
-
-  const { user, account } = useAuth()
 
   function onCloseModal() {
     setOpen(false)
@@ -92,7 +89,7 @@ export function PixTransferReceipt({
                           </h2>
                           <Fragment>
                             <h2 className="font-normal text-primary">Nome:</h2>
-                            <h3>{user?.name}</h3>
+                            <h3>{name}</h3>
                           </Fragment>
 
                           <div className="mt-5 flex">
@@ -100,14 +97,14 @@ export function PixTransferReceipt({
                               <h2 className="font-normal text-primary">
                                 Agência:
                               </h2>
-                              <h3>{account?.agency}</h3>
+                              <h3>{agency}</h3>
                             </div>
 
                             <div className="ml-28">
                               <h2 className="font-normal text-primary">
                                 Conta:
                               </h2>
-                              <h3>{account?.number}</h3>
+                              <h3>{number}</h3>
                             </div>
                           </div>
 
@@ -127,10 +124,10 @@ export function PixTransferReceipt({
                             <h3>{documentFormat(docment)}</h3>
                           </div>
 
-                          {/* <div className="mt-5">
+                          <div className="mt-5">
                             <h2 className="font-normal text-primary">Banco</h2>
                             <h3>{bankName}</h3>
-                          </div> */}
+                          </div>
 
                           <div className="mt-5">
                             <h2 className="font-normal text-primary">

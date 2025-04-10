@@ -18,6 +18,7 @@ import { numberToCurrent } from '@utils/number-to-currency'
 import { useHome } from './use-home'
 
 import { AccountStats, Transactions } from './styles'
+import { UploadDocs } from '@/components/pin-modal/upload-docs'
 
 export function Home() {
   const { isBalanceVisible } = useBalance()
@@ -26,6 +27,9 @@ export function Home() {
 
   return (
     <div className="h-screen">
+      {(user?.docs === 'ACCOUNT_CREATED' ||
+        user?.docs === 'ACCOUNT_CONFIRMED' ||
+        user?.docs === 'KYC_PENDING') && <UploadDocs />}
       <div className="flex flex-col">
         <AccountStats>
           <Card
@@ -36,7 +40,7 @@ export function Home() {
           <Card
             title="Rentabilidade do Mês"
             value={isBalanceVisible ? '***' : '***'}
-            color={'#49D294'}
+            color={'var(--primary)'}
           />
           <Card
             title="Boletos em aberto"
@@ -44,7 +48,7 @@ export function Home() {
             color={'#fff'}
             text={'var(--text-primary)'}
           />
-          <div className="md: hidden max-h-[128px] items-center rounded-lg bg-[var(--brand-background-alternative)] px-8 py-3 md:flex md:flex-col md:justify-center">
+          <div className="md: hidden max-h-[128px] items-center rounded-lg bg-[var(--primary)] px-8 py-3 md:flex md:flex-col md:justify-center">
             <div className="w-full">
               {account?.number === undefined ? (
                 <Skeleton isActive={true} slim={true} repeat={2} />
@@ -70,7 +74,10 @@ export function Home() {
           </div>
         </AccountStats>
 
-        {user?.has_pin === false && <PinModal />}
+        {user?.has_pin === false &&
+          user?.docs !== 'ACCOUNT_CONFIRMED' &&
+          user?.docs !== 'KYC_PENDING' &&
+          user?.docs !== 'ACCOUNT_CREATED' && <PinModal />}
 
         <Transactions>
           <Orders loading={loading} transactions={transactions} />

@@ -1,31 +1,30 @@
-declare module 'react-intl-currency-input'
-declare module '@react-br-forms/cpf-cnpj-mask'
+declare module "@react-br-forms/cpf-cnpj-mask";
 
-declare module 'react-input-mask' {
-  import * as React from 'react'
+declare module "react-input-mask" {
+  import * as React from "react";
 
   export interface Selection {
-    start: number
-    end: number
+    start: number;
+    end: number;
   }
 
   export interface InputState {
-    value: string
-    selection: Selection | null
+    value: string;
+    selection: Selection | null;
   }
 
   export interface BeforeMaskedStateChangeStates {
-    previousState: InputState
-    currentState: InputState
-    nextState: InputState
+    previousState: InputState;
+    currentState: InputState;
+    nextState: InputState;
   }
 
   export interface MaskOptions {
-    mask: string
-    maskChar: string | null
-    alwaysShowMask: boolean
-    formatChars: Record<string, any>
-    permanents: Array<number>
+    mask: string;
+    maskChar: string | null;
+    alwaysShowMask: boolean;
+    formatChars: Record<string, any>;
+    permanents: Array<number>;
   }
 
   export interface InputMaskProps
@@ -39,21 +38,21 @@ declare module 'react-input-mask' {
      * Any character can be escaped with backslash, which usually will appear as double backslash in JS strings.
      * For example, German phone mask with unremoveable prefix +49 will look like `mask="+4\\9 99 999 99"` or `mask={"+4\\\\9 99 999 99"}`
      */
-    mask: string | Array<string | RegExp>
-    maskChar?: string | null
-    formatChars?: Record<string, any>
+    mask: string | Array<string | RegExp>;
+    maskChar?: string | null;
+    formatChars?: Record<string, any>;
     /**
      * Character to cover unfilled editable parts of mask. Default character is "_". If set to null, unfilled parts will be empty, like in ordinary input.
      */
-    maskPlaceholder?: string | null
+    maskPlaceholder?: string | null;
     /**
      * Show mask even in empty input without focus.
      */
-    alwaysShowMask?: boolean
+    alwaysShowMask?: boolean;
     /**
      * Use inputRef instead of ref if you need input node to manage focus, selection, etc.
      */
-    inputRef?: React.Ref<HTMLInputElement>
+    inputRef?: React.Ref<HTMLInputElement>;
     /**
      * In case you need to implement more complex masking behavior,
      * you can provide beforeMaskedValueChange function to change masked
@@ -83,12 +82,12 @@ declare module 'react-input-mask' {
       oldState: InputState,
       userInput: string | null,
       maskOptions: MaskOptions,
-    ): InputState
+    ): InputState;
   }
 
   export class ReactInputMask extends React.Component<InputMaskProps> {}
 
-  export default ReactInputMask
+  export default ReactInputMask;
 }
 
-declare module 'use-react-screenshot'
+declare module "use-react-screenshot";

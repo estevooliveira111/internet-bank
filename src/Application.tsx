@@ -24,6 +24,8 @@ export function Application() {
   useEffect(() => {
     if (customer?.display_name === 'VF BANK DIGITAL') {
       changeFavicon('vfbank.png')
+    } else if (customer?.display_name === 'AtivoBanking') {
+      changeFavicon('ativobanking.png')
     } else {
       changeFavicon('vite.svg')
     }

@@ -30,6 +30,7 @@ export interface PixData {
   key: string
   status: string
   type: string
+  endToEndId: string
 }
 
 interface Output {
@@ -179,6 +180,7 @@ export function usePixTransfer(): Output {
         amount: value,
         pin: password,
         info: pixInfo,
+        endToEndId: data.endToEndId,
       })
 
       if (addFavorite) {

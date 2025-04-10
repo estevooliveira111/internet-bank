@@ -37,7 +37,7 @@ export const Receipt = () => {
     handlePrevious,
     handleNext,
     exportUrl,
-    // handleDownload,
+    handleDownload,
     sortOptions,
     handleTypeChange,
     classNames,
@@ -66,7 +66,7 @@ export const Receipt = () => {
               <div className="mb-9 mt-6 flex">
                 <Menu as="div" className="relative inline-block">
                   <div className="flex">
-                    <Menu.Button className="flex w-max items-end rounded-md border border-dark-blue bg-dark-blue p-2 text-primary shadow">
+                    <Menu.Button className="flex w-max items-end rounded-md border border-dark-blue bg-[var(--brand-background)] p-2 text-primary shadow">
                       <Download className="mr-[10px] text-primary" />
                       <span className="pr-1">Exportar</span>
                     </Menu.Button>
@@ -129,7 +129,7 @@ export const Receipt = () => {
               <table className="w-full">
                 <tbody className="border-collapse rounded-lg border-none">
                   {!loading && items.length > 0 && (
-                    <tr className="relative bg-dark-blue">
+                    <tr className="relative bg-[var(--brand-background)]">
                       <th>
                         <button
                           className="flex items-center justify-between rounded-lg bg-transparent px-2 py-3 text-base text-gray-400"
@@ -197,13 +197,7 @@ export const Receipt = () => {
                         >
                           <td>{dayjs(item.date).format('DD/MM/YYYY')}</td>
                           <td>
-                            {customer.display_name === 'BANDEC' ? (
-                              <>{item?.credit ? 'Crédito' : 'Débito'}</>
-                            ) : (
-                              <>
-                                {item.type === 'credit' ? 'Crédito' : 'Débito'}
-                              </>
-                            )}
+                            {item.type === 'credit' ? 'Crédito' : 'Débito'}
                           </td>
                           <td>
                             {item?.description || item.payer}
@@ -211,28 +205,16 @@ export const Receipt = () => {
                             {/* {getDescription(item)} */}
                           </td>
                           <td>
-                            {customer.display_name === 'BANDEC' ? (
-                              <span
-                                style={{
-                                  color: item?.credit
+                            <span
+                              style={{
+                                color:
+                                  item.type === 'credit'
                                     ? 'var(--green)'
                                     : 'var(--red)',
-                                }}
-                              >
-                                {numberToCurrent(Number(item.amount))}
-                              </span>
-                            ) : (
-                              <span
-                                style={{
-                                  color:
-                                    item.type === 'credit'
-                                      ? 'var(--green)'
-                                      : 'var(--red)',
-                                }}
-                              >
-                                {numberToCurrent(Number(item.amount))}
-                              </span>
-                            )}
+                              }}
+                            >
+                              {numberToCurrent(Number(item.amount))}
+                            </span>
 
                             <span
                               style={{
@@ -304,7 +286,23 @@ export const Receipt = () => {
                     <div className="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
                       <div className="px-4 sm:px-6">
                         <div className="flex items-start justify-between">
-                          <Dialog.Title className="text-lg font-medium text-gray-900"></Dialog.Title>
+                          <Dialog.Title className="text-lg font-medium text-gray-900">
+                            <div className="ml-4 flex-shrink-0">
+                              <span
+                                onClick={() => handleDownload()}
+                                className="flex cursor-pointer items-center font-medium"
+                              >
+                                {/* {isExporting && (
+                                  <CircleNotch
+                                    weight="bold"
+                                    className="w-5 h-5 animate-spin mr-2"
+                                  />
+                                )} */}
+                                Fazer download do comprovante{' '}
+                                <Download className="ml-2" />
+                              </span>
+                            </div>
+                          </Dialog.Title>
                           <div className="ml-3 flex h-7 items-center">
                             <button
                               type="button"
@@ -317,12 +315,11 @@ export const Receipt = () => {
                           </div>
                         </div>
                       </div>
-
                       <div
                         className="relative mt-6 flex-1 px-4 sm:px-6"
                         id="comprovante"
                       >
-                        {current && !current?.credit ? (
+                        {current ? (
                           <div className="absolute inset-0 px-4 sm:px-6">
                             <div
                               className="h-full border-2 border-dashed border-gray-200"
@@ -352,357 +349,119 @@ export const Receipt = () => {
                                     </p>
                                   </div>
                                   <div className="px-4 py-5 sm:px-6">
-                                    {customer.display_name === 'BANDEC' ? (
-                                      <>
-                                        <span>Para</span>
-                                        <h3 className="text-lg font-medium leading-6 text-gray-900">
-                                          <span className="text-base">
-                                            Chave:{' '}
-                                          </span>
-                                          {current?.description?.replace(
-                                            'Transferência PIX para',
-                                            '',
-                                          )}
-                                        </h3>
-                                      </>
-                                    ) : (
-                                      <>
-                                        <span>Para</span>
-                                        <h3 className="text-lg font-medium leading-6 text-gray-900">
-                                          {current?.payer || current?.receiver}
-                                        </h3>
-                                        <p className="mt-1 max-w-2xl text-sm text-gray-500">
-                                          {documentFormat(
-                                            current.payer_document ||
-                                              current.receiver_document ||
-                                              '',
-                                          )}
-                                        </p>
-                                      </>
-                                    )}
-                                  </div>
-
-                                  {customer.display_name === 'BANDEC' ? (
-                                    <>
-                                      <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
-                                        <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
-                                          <div className="sm:col-span-1">
-                                            <dt className="text-sm font-medium text-gray-500">
-                                              Data
-                                            </dt>
-                                            <dd className="mt-1 text-sm text-gray-900">
-                                              {dayjs(current.date).format(
-                                                'DD/MM/YYYY',
-                                              )}
-                                            </dd>
-                                          </div>
-                                          <div className="sm:col-span-1">
-                                            <dt className="text-sm font-medium text-gray-500">
-                                              Valor
-                                            </dt>
-                                            <dd className="mt-1 text-sm text-gray-900">
-                                              {numberToCurrent(
-                                                Math.abs(
-                                                  Number(current.amount),
-                                                ),
-                                              )}
-                                            </dd>
-                                          </div>
-                                        </dl>
-                                        <dl className="mt-4 grid grid-cols-1 gap-x-4 gap-y-8">
-                                          <div className="sm:col-span-1">
-                                            <dt className="text-sm font-medium text-gray-500">
-                                              Identificador:
-                                            </dt>
-                                            <dd className="mt-1 text-sm text-gray-900">
-                                              {current.id}
-                                            </dd>
-                                          </div>
-                                        </dl>
-                                      </div>
-                                    </>
-                                  ) : (
-                                    <>
-                                      <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
-                                        <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
-                                          <div className="sm:col-span-1">
-                                            <dt className="text-sm font-medium text-gray-500">
-                                              Nome
-                                            </dt>
-                                            <dd className="mt-1 text-sm text-gray-900">
-                                              {current.payer ||
-                                                current.receiver}
-                                            </dd>
-                                          </div>
-                                          <div className="sm:col-span-1">
-                                            <dt className="text-sm font-medium text-gray-500">
-                                              Documento
-                                            </dt>
-                                            <dd className="mt-1 text-sm text-gray-900">
-                                              {documentFormat(
-                                                current.payer_document ||
-                                                  current.receiver_document ||
-                                                  '',
-                                              )}
-                                            </dd>
-                                          </div>
-                                          <div className="sm:col-span-1">
-                                            <dt className="text-sm font-medium text-gray-500">
-                                              {current.category === 'PIX'
-                                                ? 'Pix'
-                                                : 'Banco'}
-                                            </dt>
-                                            <dd className="mt-1 text-sm text-gray-900">
-                                              {current.receiver_key ||
-                                                current.bank_code +
-                                                  ' ' +
-                                                  current.bank +
-                                                  ' ' +
-                                                  '(Qr Code)' ||
-                                                current.bank_code ||
-                                                '324'}
-                                            </dd>
-                                          </div>
-                                          <div className="sm:col-span-1">
-                                            <dt className="text-sm font-medium text-gray-500">
-                                              Agência/Conta
-                                            </dt>
-                                            <dd className="mt-1 text-sm text-gray-900">
-                                              {current.agency}/{current.account}
-                                            </dd>
-                                          </div>
-                                          <div className="sm:col-span-1">
-                                            <dt className="text-sm font-medium text-gray-500">
-                                              Data
-                                            </dt>
-                                            <dd className="mt-1 text-sm text-gray-900">
-                                              {dayjs(current.date).format(
-                                                'DD/MM/YYYY',
-                                              )}
-                                            </dd>
-                                          </div>
-                                          <div className="sm:col-span-1">
-                                            <dt className="text-sm font-medium text-gray-500">
-                                              Valor
-                                            </dt>
-                                            <dd className="mt-1 text-sm text-gray-900">
-                                              {numberToCurrent(
-                                                Math.abs(
-                                                  Number(current.amount),
-                                                ),
-                                              )}
-                                            </dd>
-                                          </div>
-                                        </dl>
-                                        <dl className="mt-4 grid grid-cols-1 gap-x-4 gap-y-8">
-                                          <div className="sm:col-span-1">
-                                            <dt className="text-sm font-medium text-gray-500">
-                                              Identificador:
-                                            </dt>
-                                            <dd className="mt-1 text-sm text-gray-900">
-                                              {current.id}
-                                            </dd>
-                                          </div>
-                                        </dl>
-                                      </div>
-                                    </>
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        ) : (
-                          <div></div>
-                        )}
-
-                        {current &&
-                        current?.credit &&
-                        customer.display_name === 'BANDEC' ? (
-                          <div className="absolute inset-0 px-4 sm:px-6">
-                            <div
-                              className="h-full border-2 border-dashed border-gray-200"
-                              aria-hidden="true"
-                            >
-                              <div>
-                                <div className="overflow-hidden bg-white shadow sm:rounded-lg">
-                                  <div className="flex justify-between">
-                                    <h2 className="px-6 py-4 text-lg font-medium text-gray-900">
-                                      Comprovante
-                                    </h2>
-                                    <img
-                                      src={customer.logo.dark}
-                                      width="120"
-                                      alt="Bank"
-                                      className="px-6 py-4"
-                                    />
-                                  </div>
-
-                                  <div className="px-4 py-5 sm:px-6">
-                                    <span>De</span>
+                                    <span>Para</span>
                                     <h3 className="text-lg font-medium leading-6 text-gray-900">
-                                      {current?.description?.replace(
-                                        'Pix recebido de ',
-                                        '',
-                                      )}
+                                      {current?.payer || current?.receiver}
                                     </h3>
+                                    <p className="mt-1 max-w-2xl text-sm text-gray-500">
+                                      {documentFormat(
+                                        current.payer_document ||
+                                          current.receiver_document ||
+                                          '',
+                                      )}
+                                    </p>
                                   </div>
-                                  <div className="px-4 py-5 sm:px-6">
-                                    {customer.display_name === 'BANDEC' ? (
-                                      <>
-                                        <span>Para</span>
-                                        <h3 className="text-lg font-medium leading-6 text-gray-900">
-                                          <span className="text-base">
-                                            {user.name}
-                                          </span>
-                                        </h3>
-                                        <p className="mt-1 max-w-2xl text-sm text-gray-500">
-                                          {documentFormat(user.document)}
-                                        </p>
-                                      </>
-                                    ) : (
-                                      <>
-                                        <span>Para</span>
-                                        <h3 className="text-lg font-medium leading-6 text-gray-900">
-                                          {current?.payer || current?.receiver}
-                                        </h3>
-                                        <p className="mt-1 max-w-2xl text-sm text-gray-500">
+                                  <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
+                                    <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+                                      <div className="sm:col-span-1">
+                                        <dt className="text-sm font-medium text-gray-500">
+                                          Nome
+                                        </dt>
+                                        <dd className="mt-1 text-sm text-gray-900">
+                                          {current.payer || current.receiver}
+                                        </dd>
+                                      </div>
+                                      <div className="sm:col-span-1">
+                                        <dt className="text-sm font-medium text-gray-500">
+                                          Documento
+                                        </dt>
+                                        <dd className="mt-1 text-sm text-gray-900">
                                           {documentFormat(
                                             current.payer_document ||
                                               current.receiver_document ||
                                               '',
                                           )}
-                                        </p>
-                                      </>
-                                    )}
+                                        </dd>
+                                      </div>
+                                      <div className="sm:col-span-1">
+                                        <dt className="text-sm font-medium text-gray-500">
+                                          {current.category === 'PIX'
+                                            ? 'Pix'
+                                            : 'Banco'}
+                                        </dt>
+                                        <dd className="mt-1 text-sm text-gray-900">
+                                          {current.receiver_key ||
+                                            current.bank_code +
+                                              ' ' +
+                                              current.bank +
+                                              ' ' +
+                                              '(Qr Code)' ||
+                                            current.bank_code ||
+                                            '324'}
+                                        </dd>
+                                      </div>
+                                      <div className="sm:col-span-1">
+                                        <dt className="text-sm font-medium text-gray-500">
+                                          Agência/Conta
+                                        </dt>
+                                        <dd className="mt-1 text-sm text-gray-900">
+                                          {current.agency}/{current.account}
+                                        </dd>
+                                      </div>
+                                      <div className="sm:col-span-1">
+                                        <dt className="text-sm font-medium text-gray-500">
+                                          Data
+                                        </dt>
+                                        <dd className="mt-1 text-sm text-gray-900">
+                                          {dayjs(current.date).format(
+                                            'DD/MM/YYYY',
+                                          )}
+                                        </dd>
+                                      </div>
+                                      <div className="sm:col-span-1">
+                                        <dt className="text-sm font-medium text-gray-500">
+                                          Valor
+                                        </dt>
+                                        <dd className="mt-1 text-sm text-gray-900">
+                                          {numberToCurrent(
+                                            Math.abs(Number(current.amount)),
+                                          )}
+                                        </dd>
+                                      </div>
+                                    </dl>
+                                    <dl className="mt-4 grid grid-cols-1 gap-x-4 gap-y-8">
+                                      <div className="sm:col-span-1">
+                                        <dt className="text-sm font-medium text-gray-500">
+                                          Identificador:
+                                        </dt>
+                                        <dd className="mt-1 text-sm text-gray-900">
+                                          {current.id}
+                                        </dd>
+                                      </div>
+                                    </dl>
                                   </div>
-
-                                  {customer.display_name === 'BANDEC' ? (
-                                    <>
-                                      <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
-                                        <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
-                                          <div className="sm:col-span-1">
-                                            <dt className="text-sm font-medium text-gray-500">
-                                              Data
-                                            </dt>
-                                            <dd className="mt-1 text-sm text-gray-900">
-                                              {dayjs(current.date).format(
-                                                'DD/MM/YYYY',
-                                              )}
-                                            </dd>
-                                          </div>
-                                          <div className="sm:col-span-1">
-                                            <dt className="text-sm font-medium text-gray-500">
-                                              Valor
-                                            </dt>
-                                            <dd className="mt-1 text-sm text-gray-900">
-                                              {numberToCurrent(
-                                                Math.abs(
-                                                  Number(current.amount),
-                                                ),
-                                              )}
-                                            </dd>
-                                          </div>
-                                        </dl>
-                                        <dl className="mt-4 grid grid-cols-1 gap-x-4 gap-y-8">
-                                          <div className="sm:col-span-1">
-                                            <dt className="text-sm font-medium text-gray-500">
-                                              Identificador:
-                                            </dt>
-                                            <dd className="mt-1 text-sm text-gray-900">
-                                              {current.id}
-                                            </dd>
-                                          </div>
-                                        </dl>
-                                      </div>
-                                    </>
-                                  ) : (
-                                    <>
-                                      <div className="border-t border-gray-200 px-4 py-5 sm:px-6">
-                                        <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
-                                          <div className="sm:col-span-1">
-                                            <dt className="text-sm font-medium text-gray-500">
-                                              Nome
-                                            </dt>
-                                            <dd className="mt-1 text-sm text-gray-900">
-                                              {current.payer ||
-                                                current.receiver}
-                                            </dd>
-                                          </div>
-                                          <div className="sm:col-span-1">
-                                            <dt className="text-sm font-medium text-gray-500">
-                                              Documento
-                                            </dt>
-                                            <dd className="mt-1 text-sm text-gray-900">
-                                              {documentFormat(
-                                                current.payer_document ||
-                                                  current.receiver_document ||
-                                                  '',
-                                              )}
-                                            </dd>
-                                          </div>
-                                          <div className="sm:col-span-1">
-                                            <dt className="text-sm font-medium text-gray-500">
-                                              {current.category === 'PIX'
-                                                ? 'Pix'
-                                                : 'Banco'}
-                                            </dt>
-                                            <dd className="mt-1 text-sm text-gray-900">
-                                              {current.receiver_key ||
-                                                current.bank_code +
-                                                  ' ' +
-                                                  current.bank +
-                                                  ' ' +
-                                                  '(Qr Code)' ||
-                                                current.bank_code ||
-                                                '324'}
-                                            </dd>
-                                          </div>
-                                          <div className="sm:col-span-1">
-                                            <dt className="text-sm font-medium text-gray-500">
-                                              Agência/Conta
-                                            </dt>
-                                            <dd className="mt-1 text-sm text-gray-900">
-                                              {current.agency}/{current.account}
-                                            </dd>
-                                          </div>
-                                          <div className="sm:col-span-1">
-                                            <dt className="text-sm font-medium text-gray-500">
-                                              Data
-                                            </dt>
-                                            <dd className="mt-1 text-sm text-gray-900">
-                                              {dayjs(current.date).format(
-                                                'DD/MM/YYYY',
-                                              )}
-                                            </dd>
-                                          </div>
-                                          <div className="sm:col-span-1">
-                                            <dt className="text-sm font-medium text-gray-500">
-                                              Valor
-                                            </dt>
-                                            <dd className="mt-1 text-sm text-gray-900">
-                                              {numberToCurrent(
-                                                Math.abs(
-                                                  Number(current.amount),
-                                                ),
-                                              )}
-                                            </dd>
-                                          </div>
-                                        </dl>
-                                        <dl className="mt-4 grid grid-cols-1 gap-x-4 gap-y-8">
-                                          <div className="sm:col-span-1">
-                                            <dt className="text-sm font-medium text-gray-500">
-                                              Identificador:
-                                            </dt>
-                                            <dd className="mt-1 text-sm text-gray-900">
-                                              {current.id}
-                                            </dd>
-                                          </div>
-                                        </dl>
-                                      </div>
-                                    </>
-                                  )}
                                 </div>
                               </div>
+
+                              {/* Comprovante */}
+                              {/* <div className="border-t border-gray-200 px-4 py-5 sm:px-6 sm:col-span-2">
+                              <dt className="text-sm font-medium text-gray-500">Comprovante (PDF)</dt>
+                              <dd className="mt-1 text-sm text-gray-900">
+                                <ul className="border border-gray-200 rounded-md divide-y divide-gray-200">
+                                  <li className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
+                                    <div className="w-0 flex-1 flex items-center">
+                                      <PaperClipIcon className="flex-shrink-0 h-5 w-5 text-gray-400" aria-hidden="true" />
+                                      <span className="ml-2 flex-1 w-0 truncate">comprovante.pdf</span>
+                                    </div>
+                                    <div className="ml-4 flex-shrink-0 print:hidden">
+                                      <span onClick={() => handleDownload("1")} className="cursor-pointer font-medium text-indigo-600 hover:text-indigo-500 flex items-center">
+                                      {isExporting && <CircleNotch weight="bold" className="w-5 h-5 animate-spin mr-2"/>} Fazer download
+                                      </span>
+                                    </div>
+                                  </li>
+                                </ul>
+                              </dd>
+                        </div> */}
                             </div>
                           </div>
                         ) : (

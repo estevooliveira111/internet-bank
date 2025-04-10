@@ -12,9 +12,6 @@ module.exports = {
       'warn',
       { allowConstantExport: false },
       ],
-      'no-unused-vars': 'off',
-      
-      
-      
+      'no-unused-vars': 'off',  
   },
 }

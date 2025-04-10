@@ -74,7 +74,7 @@ export function PixKeys() {
                   {pixKeys.map((key) => (
                     <tr key={key.key}>
                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-0">
-                        {dayjs(key.createdAt).format('DD/MM/YYYY')}
+                        {dayjs(key?.updated_at).format('DD/MM/YYYY')}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm ">
                         {key.key}
@@ -83,7 +83,7 @@ export function PixKeys() {
                         {key.type}
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm ">
-                        {key.status === 'active' ? 'ativa' : 'pendente'}
+                        {key.status === 'CONFIRMED' ? 'ativa' : 'pendente'}
                       </td>
 
                       <td className="relative flex whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">

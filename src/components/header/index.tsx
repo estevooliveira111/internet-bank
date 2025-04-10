@@ -72,7 +72,8 @@ export const Header: React.FC<props> = ({
       user.step === 'WAITING_DOCUMENTS' ||
       user.step === 'WAITING_DOCUMENTS_SELFIE' ||
       user.step === 'WAITING_DOCUMENTS_FRONT' ||
-      user.step === 'WAITING_DOCUMENTS_BACK'
+      user.step === 'WAITING_DOCUMENTS_BACK' ||
+      user.step === 'RESEND_DOCUMENTS'
     ) {
       navigate('/u/onboarding/documents')
     } else if (user.step === 'WAITING_COMPANY_DATA') {
@@ -80,10 +81,27 @@ export const Header: React.FC<props> = ({
     } else if (user.step === 'WAITING_COMPANY_ADDRESS') {
       // precisa do company_id
       navigate('/u/onboarding/company-address/ID')
+    } else if (user.step === 'WAITING_COMPANY_DOCUMENT') {
+      // precisa do company_id
+      navigate('/u/onboarding/company-document/ID')
     } else if (user.step === 'WAITING_ANALYSYS') {
       navigate('/u/onboarding/analysis')
+    } else if (user.step === 'REJECTED_KYC') {
+      navigate('/u/onboarding/rejected')
     } else if (user.step === 'IN_ANALYSIS') {
       navigate('/u/onboarding/analysis')
+    } else if (user.step === 'PRE_APPROVED') {
+      if (
+        user?.docs === 'ACCOUNT_CREATED' ||
+        user?.docs === 'ACCOUNT_CONFIRMED' ||
+        user?.docs === 'KYC_PENDING'
+      ) {
+        // navigate('/onboarding/documents')
+      } else {
+        navigate('/u/onboarding/analysis')
+      }
+    } else if (user.step === 'REJECTED') {
+      navigate('/u/onboarding/rejected')
     }
   }, [user, navigate])
 

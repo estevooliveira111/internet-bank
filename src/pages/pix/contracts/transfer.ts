@@ -26,6 +26,7 @@ export interface PixData {
   key: string
   status: string
   type: string
+  endToEndId: string
 }
 
 export interface Output {

@@ -13,6 +13,7 @@ export interface User {
   email: string
   phone: string
   has_pin?: boolean
+  docs?: string | null
 }
 
 export interface Account {

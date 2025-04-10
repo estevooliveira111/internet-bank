@@ -70,19 +70,19 @@ export default function NewAccount() {
   const [step, setStep] = useState(-1)
   const [companyId, setCompanyId] = useState('')
 
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async function handleSelectedAccount(company: any) {
     if (company?.account?.id) {
       try {
         await api.post('accounts/change', {
-          accountId: company.account.id
-        });
-       setTimeout(() => {
-         window.location.reload();
-       }, 1000);
+          accountId: company.account.id,
+        })
+        setTimeout(() => {
+          window.location.reload()
+        }, 1000)
         navigation('/')
       } catch (err) {
-        // 
+        //
       }
     }
   }
@@ -181,7 +181,10 @@ export default function NewAccount() {
                               {company.account?.status || 'Incompleto'}
                             </td>
                             <td>
-                              <Button title="Acessar" onClick={() => handleSelectedAccount(company)} />
+                              <Button
+                                title="Acessar"
+                                onClick={() => handleSelectedAccount(company)}
+                              />
                             </td>
                           </tr>
                         ))}
@@ -217,8 +220,8 @@ export default function NewAccount() {
                   <div className="flex flex-1 flex-col">
                     <p>
                       Aguarde enquanto processamos a análise dos seus dados.
-                      Dentro de um dia útil, enviaremos a resposta diretamente
-                      para o seu e-mail.
+                      Dentro de um 3 dias úteis, enviaremos a resposta
+                      diretamente para o seu e-mail.
                     </p>
                   </div>
                 </div>

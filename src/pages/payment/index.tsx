@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import { CheckIcon } from 'lucide-react'
 import { FormEvent, useState } from 'react'
-import IntlCurrencyInput from 'react-intl-currency-input'
+import IntlCurrencyInput from '@/components/input/react-intl-currency-input/IntlCurrencyInput'
 import { useNavigate } from 'react-router-dom'
 import { Button } from '../../components/button'
 import { ArrowLeftIcon } from '../../components/icons/arrow-left'
@@ -13,40 +13,26 @@ import { api, parseError } from '../../lib/axios'
 import { documentFormat } from '../../utils/document-format'
 import { numberToCurrent } from '../../utils/number-to-currency'
 
-
 export interface PaymentData {
-  allowChangeTotalValue: boolean
-  allowPartialPayment: boolean
-  barCode: string
-  beneficiaryCorporateName: string
-  digitLine: string
-  discont: number
+  transactionId: string
+  digitableLine: string
+  dueDate: string
+  AllowChangeValue: boolean
+  maxValue: number
+  minValue: number
+  originalValue: number
+  totalUpdated: number
+  payer: string
+  beneficiary: string
+  documentRecipient: string
+  documentPayer: string
+  payDueDate: string
   discountValue: number
-  expirationDate: string
-  paymentLimitDate: string
-  fees: number
-  fine: number
-  maximumValue: number
-  minimumValue: number
-  payerDocument: string
-  payerName: string
-  rebateValue: number
-  receiverDocument: string
-  receiverName: string
-  totalValue: number
-  value: number
-  receiveAuthorizationValueDivergentType: string
-  diversePaymentType: string
-  validateDuplicity: boolean
-  enableMP: boolean
-  slipConsultTime: string
-  type: string
-
-  digitableLine: string;
-  beneficiary: string;
-  dueDate: string;
-  payer: string;
-  documentPayer: string;
+  interestValueCalculated: number
+  fineValueCalculated: number
+  totalWithDiscount: number
+  totalWithAdditional: number
+  initeHour: string
 }
 
 export function Payment() {
@@ -98,11 +84,11 @@ export function Payment() {
     try {
       setLoading(true)
       const { data } = await api.post('/payments/read-bank-slip', {
-        barcode: barcode.replace(/\D/g, ''),
+        digitable: barcode.replace(/\D/g, ''),
       })
-      setToken(data.payments.token)
-      setData(data.payments.data)
-      setValue(data.payments.data.totalValue)
+      setToken(data.payments.transactionId)
+      setData(data.payments)
+      setValue(data.payments.totalUpdated)
       setStep(2)
     } catch (err) {
       const error = parseError(err)
@@ -130,17 +116,11 @@ export function Payment() {
         return
       }
 
-      const response = await api.post('/payments/payment', {
+      const { data } = await api.post('/payments/payment', {
         token,
-        amount: value,
         pin: password,
-        beneficiary: data.beneficiary,
-        digitable: data.digitableLine,
-        dueDate: data.dueDate,
-        payer: data.payer,
-        documentPayer: data.documentPayer,
       })
-      setTransactionId(response.data.payment.controlNumber)
+      setTransactionId(data.payment.controlNumber)
       setOpen(true)
       setStep(1)
       setBarcode('')
@@ -217,7 +197,7 @@ export function Payment() {
           <div className='className="inline-flex min-w-full flex-col rounded-md rounded-bl-none rounded-br-none bg-[#eaeaea] p-6 md:min-w-[520px]'>
             <div className="flex w-full items-center justify-between pb-4">
               <span className="font-bold text-tx-primary">
-                {data.digitLine}
+                {data?.digitableLine}
               </span>
               <span className="text-primary">
                 {/* {dateFormatWithHours(new Date())} */}
@@ -227,7 +207,7 @@ export function Payment() {
             <div className="flex w-full items-center gap-4 pb-4">
               <span className="text-primary">Vencimento</span>
               <span className="text-[var(--text-gray)]">
-                {dayjs(data.expirationDate).format('DD/MM/YYYY')}
+                {dayjs(data.dueDate).format('DD/MM/YYYY')}
               </span>
             </div>
 
@@ -241,9 +221,9 @@ export function Payment() {
             <div className="flex w-full items-center gap-4 pb-4">
               <span className="text-primary">Beneficiário</span>
               <span className="text-[var(--text-gray)]">
-                {data.receiverName}{' '}
-                {data.receiverDocument && (
-                  <>{documentFormat(data.payerDocument)}</>
+                {data.beneficiary}{' '}
+                {data.documentRecipient && (
+                  <>{documentFormat(data.documentPayer)}</>
                 )}
               </span>
             </div>
@@ -268,7 +248,7 @@ export function Payment() {
                     },
                   },
                 }}
-                value={data.totalValue}
+                value={data.totalUpdated}
                 disabled={true}
                 onChange={(
                   event: FormEvent<Element>,
@@ -357,23 +337,23 @@ export function Payment() {
 
                   <div>
                     <h2>Linha Digitável</h2>
-                    <h3>{data.digitLine}</h3>
+                    <h3>{data?.digitableLine}</h3>
                   </div>
 
                   <div className="mt-5">
                     <h2>Vencimento</h2>
-                    <h3>{dayjs(data.expirationDate).format('DD/MM/YYYY')}</h3>
+                    <h3>{dayjs(data.dueDate).format('DD/MM/YYYY')}</h3>
                   </div>
 
                   <div className="mt-5">
                     <h2>Beneficiario</h2>
-                    <h3>{data.payerName}</h3>
+                    <h3>{data.payer}</h3>
                   </div>
 
                   <div className="mt-5 flex">
                     <div>
                       <h2>Documento</h2>
-                      <h3>{documentFormat(data.payerDocument)}</h3>
+                      <h3>{documentFormat(data.documentPayer)}</h3>
                     </div>
                   </div>
 

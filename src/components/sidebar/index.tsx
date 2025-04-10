@@ -50,7 +50,7 @@ export function Sidebar({ isactive }: Props) {
   const { account } = useAuth()
 
   const [bankServicesopened, setBankServicesopened] = useState(true)
-  const [gestaoServicesopened, setGestaoServicesopened] = useState(true)
+  const [gestaoServicesopened, setGestaoServicesopened] = useState(false)
   const [myAccountopened, setMyAccountopened] = useState(true)
 
   const handleBankServiceToggle = () => {
@@ -59,6 +59,9 @@ export function Sidebar({ isactive }: Props) {
 
   const handleGestaoServiceToggle = () => {
     setGestaoServicesopened((state) => !state)
+    if (customer.display_name === 'Alle Bank') {
+      window.location.href = 'https://allebank.hackingmake.com.br/'
+    }
   }
 
   const handleMyAccountoggle = () => {
@@ -72,7 +75,9 @@ export function Sidebar({ isactive }: Props) {
         <div style={{ marginLeft: '16px' }}>
           <img
             src={customer.logo.white}
-            style={{ maxWidth: 80 }}
+            style={{
+              maxWidth: customer.display_name === 'Banco MSM' ? 60 : 80,
+            }}
             alt={customer.display_name}
           />
         </div>
@@ -179,7 +184,7 @@ export function Sidebar({ isactive }: Props) {
               }
             />
 
-            <OptionSidebar
+            {/* <OptionSidebar
               selected={route.pathname === '/charge'}
               linkTo={'/charge'}
               title={'Cobrar'}
@@ -193,7 +198,7 @@ export function Sidebar({ isactive }: Props) {
                   }
                 />
               }
-            />
+            /> */}
 
             <OptionSidebar
               selected={route.pathname.startsWith('/pix')}
@@ -246,8 +251,7 @@ export function Sidebar({ isactive }: Props) {
         )}
       </AnimatePresence>
 
-      {(customer.display_name === 'Stric' ||
-        customer.display_name === 'Umbank' ||
+      {(customer.display_name === 'Umbank' ||
         customer.display_name === 'Alle Bank' ||
         customer.display_name === 'Educação Bank') && (
         <>
@@ -355,7 +359,7 @@ export function Sidebar({ isactive }: Props) {
               }
             />
 
-            <OptionSidebar
+            {/* <OptionSidebar
               selected={route.pathname === '/new-account'}
               linkTo={'/new-account'}
               title={'Conta PJ'}
@@ -369,7 +373,7 @@ export function Sidebar({ isactive }: Props) {
                   }
                 />
               }
-            />
+            /> */}
 
             <OptionSidebar
               selected={route.pathname === '/signout'}
