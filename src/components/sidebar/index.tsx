@@ -50,7 +50,7 @@ export function Sidebar({ isactive }: Props) {
   const { account } = useAuth()
 
   const [bankServicesopened, setBankServicesopened] = useState(true)
-  const [gestaoServicesopened, setGestaoServicesopened] = useState(false)
+  const [gestaoServicesopened, setGestaoServicesopened] = useState(true)
   const [myAccountopened, setMyAccountopened] = useState(true)
 
   const handleBankServiceToggle = () => {
@@ -253,7 +253,9 @@ export function Sidebar({ isactive }: Props) {
 
       {(customer.display_name === 'Umbank' ||
         customer.display_name === 'Alle Bank' ||
-        customer.display_name === 'Educação Bank') && (
+        customer.display_name === 'Educação Bank' ||
+        customer.display_name === 'Stric' ||
+        customer.display_name === 'AllBank Invest') && (
         <>
           <Service
             handleOption={handleGestaoServiceToggle}
@@ -359,7 +361,7 @@ export function Sidebar({ isactive }: Props) {
               }
             />
 
-            {/* <OptionSidebar
+            <OptionSidebar
               selected={route.pathname === '/new-account'}
               linkTo={'/new-account'}
               title={'Conta PJ'}
@@ -373,7 +375,7 @@ export function Sidebar({ isactive }: Props) {
                   }
                 />
               }
-            /> */}
+            />
 
             <OptionSidebar
               selected={route.pathname === '/signout'}

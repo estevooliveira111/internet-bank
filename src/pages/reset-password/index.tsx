@@ -135,7 +135,7 @@ export function ResetPassword() {
           </WrapperForm>
           <ForgetPassword to="/u">Voltar para o Login</ForgetPassword>
           <Line />
-          {customer.display_name === 'AllBank Invest' && (
+          {customer.display_name !== 'Stric' && (
             <NotHaveAnAccount to="/u/account-type">
               Não tem uma conta? Abrir conta {customer.display_name}
             </NotHaveAnAccount>

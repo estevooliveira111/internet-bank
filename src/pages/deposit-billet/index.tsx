@@ -9,20 +9,46 @@ import { useNotification } from '../../hooks/notification'
 import { api, parseError } from '../../lib/axios'
 import { formatDateToYYYYMMDD } from '../../utils/date-format'
 import validateDate from '../../utils/date-validation'
+import { useAuth } from '@/hooks/auth'
 
 export interface Billet {
   id: string
-  user_id: string
-  ref_id: string
-  amount: number
-  numeric_line: string
-  digitableLine: string
   due_date: string
-  url: string
+  order_id: string
+  ref_id: string
+  total: number
+  transaction_number: string
   status: string
   paid_at: string
-  created_at: string
-  updated_at: string
+  credited_at: string
+  url: string
+  method: string
+  payment_method: string
+  total_paid: number
+  pix: {
+    emv: string
+    qrcode: string
+  }
+  bank_slip: {
+    digitable_line: string
+    barcode: string
+    barcode_image: string
+  }
+  client: {
+    id: string
+    name: string
+    document: string
+    address: {
+      zip_code: string
+      street: string
+      neighborhood: string
+      number: string
+      complement: string
+      city: string
+      state: string
+      country: string
+    }
+  }
 }
 
 export function DepositBillet() {
@@ -30,9 +56,11 @@ export function DepositBillet() {
   const [step, setStep] = useState(1)
   const [amount, setAmount] = useState(0)
   const [dueDate, setDueDate] = useState('')
-  const [maskedValue, setMaskedValue] = useState('0,00')
+  const [, setMaskedValue] = useState('0,00')
   const [loading, setLoading] = useState(false)
   const { showNotification, hidden } = useNotification()
+
+  const { user } = useAuth()
 
   const [data, setData] = useState<Billet>({} as Billet)
 
@@ -83,12 +111,30 @@ export function DepositBillet() {
 
   async function handleGenerateBillet() {
     try {
-      const { data } = await api.post('/billets', {
+      const { data: client } = await api.post('/invoices/clients', {
+        document: user.document.replace(/[-,_]/g, ''),
+        name: user.name,
+        phone: user.phone,
+        email: user.email,
+        self: true,
+        address: {
+          street: 'Steet',
+          number: '123',
+          neighborhood: 'Bairro',
+          city: 'São Paulo',
+          state: 'SP',
+          country: 'Brasil',
+          zipCode: '00000000',
+        },
+      })
+
+      const { data } = await api.post('/invoices', {
+        client_id: client.client.id,
         amount,
         due_date: formatDateToYYYYMMDD(dueDate),
       })
 
-      setData(data.billet)
+      setData(data.invoice)
       setStep(2)
       setLoading(false)
     } catch (err) {
@@ -130,9 +176,7 @@ export function DepositBillet() {
             {step === 1 ? ' Gerar novo boleto' : 'Confirme os dados'}
           </h1>
           <span className="block">
-            {step === 1
-              ? 'Por motivos de segurança você pode ter até 2 boletos de depósito em aberto'
-              : 'Confirme os dados abaixo para gerar o boleto'}
+            {step === 1 ? '' : 'Confirme os dados abaixo para gerar o boleto'}
           </span>
         </div>
       </div>
@@ -220,7 +264,7 @@ export function DepositBillet() {
                     },
                   },
                 }}
-                value={Number(maskedValue)}
+                value={Number(data.total)}
                 disabled={true}
                 onChange={(
                   event: FormEvent<Element>,
@@ -231,7 +275,7 @@ export function DepositBillet() {
             </div>
             <div className="flex w-full items-center justify-between pb-4">
               <span className="font-bold text-tx-primary">
-                {data.digitableLine}
+                Boleto de Recarga
               </span>
               <span className="text-primary">
                 {/* {dateFormatWithHours(new Date())} */}
@@ -246,7 +290,7 @@ export function DepositBillet() {
             <div className="flex w-full items-center gap-4 pb-4">
               <span className="text-primary">Linha Digitavel</span>
               <span className="text-[var(--text-gray)]">
-                {data.digitableLine}
+                {data.bank_slip.digitable_line}
               </span>
             </div>
           </div>

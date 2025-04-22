@@ -42,15 +42,18 @@ export const CustomerContext = createContext({} as CustomerContextData)
 export function CustomerProvider({ children }: AuthProviderProps) {
   const [customer, setCustomer] = useState<Customer>({} as Customer)
   useEffect(() => {
+    const configCustomer =
+      customers.find((c) => window.location.host.includes(c.host)) ||
+      customers[0]
 
     api
       .get('/customers', {
         headers: {
-          customer: import.meta.env.VITE_API_CUSTOMER,
+          customer: configCustomer.ref,
         },
       })
       .then(({ data }) => {
-        api.defaults.headers.common.customer = import.meta.env.VITE_API_CUSTOMER
+        api.defaults.headers.common.customer = configCustomer.ref
         setCustomer({
           name: data.customer.name,
           document: data.customer.document,

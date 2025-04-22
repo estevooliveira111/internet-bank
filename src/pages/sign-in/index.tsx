@@ -106,7 +106,7 @@ export function SignIn() {
               }}
             />
           </WrapperLogo>
-          {customer?.display_name === 'AtivoBanking' ? (
+          {customer?.display_name === 'AtivoBankingfa' ? (
             <Title>
               Bem-vindo ao <br /> <b> {customer.display_name}</b>
             </Title>
@@ -169,7 +169,7 @@ export function SignIn() {
           </WrapperForm>
           <ForgetPassword to="/u/forgot">Esqueci minha senha</ForgetPassword>
           <Line />
-          {customer.display_name === 'AllBank Invest' && (
+          {customer.display_name !== 'Stric' && (
             <NotHaveAnAccount to="/u/account-type">
               Não tem uma conta? Abrir conta{' '}
               <span>{customer.display_name}</span>

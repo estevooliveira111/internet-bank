@@ -220,8 +220,8 @@ export default function NewAccount() {
                   <div className="flex flex-1 flex-col">
                     <p>
                       Aguarde enquanto processamos a análise dos seus dados.
-                      Dentro de um 3 dias úteis, enviaremos a resposta
-                      diretamente para o seu e-mail.
+                      Dentro de 24 horas, enviaremos a resposta diretamente para
+                      o seu e-mail.
                     </p>
                   </div>
                 </div>

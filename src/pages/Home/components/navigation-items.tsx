@@ -9,7 +9,7 @@ import { Items, Action } from '../styles'
 export function NavigationItems() {
   return (
     <Items>
-      <Link to="charge">
+      <Link to="gestao-cobrancas/invoices">
         <Action>
           <div className="mb-5 text-base font-[var(--semiBold)] text-primary">
             Cobrar

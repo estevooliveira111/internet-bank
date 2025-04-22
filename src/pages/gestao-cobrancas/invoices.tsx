@@ -1,137 +1,137 @@
-import { Button } from "@/components/button";
-import { Input } from "@/components/input";
-import { api, parseError } from "@/lib/axios";
-import { FormEvent, Fragment, useEffect, useState } from "react";
-import { Menu, Transition, Dialog, Combobox } from "@headlessui/react";
+import { Button } from '@/components/button'
+import { Input } from '@/components/input'
+import { api, parseError } from '@/lib/axios'
+import { FormEvent, Fragment, useEffect, useState } from 'react'
+import { Menu, Transition, Dialog, Combobox } from '@headlessui/react'
 import {
   EllipsisVerticalIcon,
   XMarkIcon,
   CheckIcon,
   ChevronUpDownIcon,
-} from "@heroicons/react/20/solid";
-import { numberToCurrent } from "@/utils/number-to-currency";
-import { useCustomer } from "@/hooks/customer";
-import { dateFormat, formatDateToYYYYMMDD } from "@/utils/date-format";
-import { useNotification } from "@/hooks/notification";
-import IntlCurrencyInput from "@/components/input/react-intl-currency-input/IntlCurrencyInput";
-import validateDate from "@/utils/date-validation";
-import { documentFormat } from "@/utils/document-format";
-import { CopyToClipboard } from "react-copy-to-clipboard";
+} from '@heroicons/react/20/solid'
+import { numberToCurrent } from '@/utils/number-to-currency'
+// import { useCustomer } from '@/hooks/customer'
+import { dateFormat, formatDateToYYYYMMDD } from '@/utils/date-format'
+import { useNotification } from '@/hooks/notification'
+import IntlCurrencyInput from '@/components/input/react-intl-currency-input/IntlCurrencyInput'
+import validateDate from '@/utils/date-validation'
+import { documentFormat } from '@/utils/document-format'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 function classNames(...classes: string[]): string {
-  return classes.filter(Boolean).join(" ");
+  return classes.filter(Boolean).join(' ')
 }
 
 export interface Pix {
-  emv: string;
-  qrcode: string;
+  emv: string
+  qrcode: string
 }
 
 export interface BankSlip {
-  digitable_line: string;
-  barcode: string;
-  barcode_image: string;
+  digitable_line: string
+  barcode: string
+  barcode_image: string
 }
 
 export interface Receiver {}
 
 export interface Address {
-  zip_code: string;
-  street: string;
-  neighborhood: string;
-  number: string;
-  complement?: string;
-  city: string;
-  state: string;
-  country: string;
+  zip_code: string
+  street: string
+  neighborhood: string
+  number: string
+  complement?: string
+  city: string
+  state: string
+  country: string
 }
 
 export interface Client {
-  id: string;
-  name: string;
-  document: string;
-  address: Address;
+  id: string
+  name: string
+  document: string
+  address: Address
 }
 
 export interface Invoice {
-  id: string;
-  due_date: string;
-  order_id: string;
-  ref_id: string;
-  total: number;
-  transaction_number: string;
-  status: string;
-  paid_at?: string | Date;
-  credited_at?: string | Date;
-  url: string;
-  method: string;
-  payment_method: string | null;
-  total_paid: number;
-  pix: Pix;
-  bank_slip: BankSlip;
-  receiver: Receiver;
-  client: Client;
+  id: string
+  due_date: string
+  order_id: string
+  ref_id: string
+  total: number
+  transaction_number: string
+  status: string
+  paid_at?: string | Date
+  credited_at?: string | Date
+  url: string
+  method: string
+  payment_method: string | null
+  total_paid: number
+  pix: Pix
+  bank_slip: BankSlip
+  receiver: Receiver
+  client: Client
 }
 
 export function GestaoCobrancaInvoices() {
-  const [open, setOpen] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
-  const { showNotification, hidden } = useNotification();
-  const [clients, setClients] = useState<Client[]>([]);
-  const [invoices, setInvoices] = useState<Invoice[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isFetched] = useState(true);
-  const { customer } = useCustomer();
-  const [amount, setAmount] = useState(0);
-  const [maskedValue, setMaskedValue] = useState("0,00");
+  const [open, setOpen] = useState(false)
+  const [openModal, setOpenModal] = useState(false)
+  const { showNotification, hidden } = useNotification()
+  const [clients, setClients] = useState<Client[]>([])
+  const [invoices, setInvoices] = useState<Invoice[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [isFetched] = useState(true)
+  // const { customer } = useCustomer()
+  const [amount, setAmount] = useState(0)
+  const [maskedValue, setMaskedValue] = useState('0,00')
 
-  const [amountMulta, setAmountMulta] = useState(0);
-  const [, setMaskedValueMulta] = useState("0,00");
+  const [amountMulta, setAmountMulta] = useState(0)
+  const [, setMaskedValueMulta] = useState('0,00')
 
-  const [multa, setMulta] = useState(false);
+  const [multa, setMulta] = useState(false)
 
-  const [invoice, setInvoice] = useState<Invoice | null>(null);
+  const [invoice, setInvoice] = useState<Invoice | null>(null)
 
-  const [dueDate, setDueDate] = useState("");
+  const [dueDate, setDueDate] = useState('')
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    fetchClients();
-    fetchInvoices();
-  }, []);
+    fetchClients()
+    fetchInvoices()
+  }, [])
 
   async function fetchInvoices() {
     api
-      .get("/invoices")
+      .get('/invoices')
       .then(({ data }) => {
-        setInvoices(data.invoices);
+        setInvoices(data.invoices)
       })
       .finally(() => {
-        setIsLoading(false);
-      });
+        setIsLoading(false)
+      })
   }
 
   async function fetchClients() {
     api
-      .get("/invoices/clients")
+      .get('/invoices/clients')
       .then(({ data }) => {
-        setClients(data.clients);
+        setClients(data.clients)
       })
       .finally(() => {
-        setIsLoading(false);
-      });
+        setIsLoading(false)
+      })
   }
 
-  const [query, setQuery] = useState("");
-  const [selectedPerson, setSelectedPerson] = useState<Client | null>(null);
+  const [query, setQuery] = useState('')
+  const [selectedPerson, setSelectedPerson] = useState<Client | null>(null)
 
   const filteredPeople =
-    query === ""
+    query === ''
       ? clients
       : clients.filter((client) => {
-          return client.name.toLowerCase().includes(query.toLowerCase());
-        });
+          return client.name.toLowerCase().includes(query.toLowerCase())
+        })
 
   function renderSkeleton() {
     return (
@@ -140,41 +140,41 @@ export function GestaoCobrancaInvoices() {
         <div className="h-2 max-w-[360px] rounded-full bg-gray-50 dark:bg-gray-700"></div>
         <span className="sr-only">Loading...</span>
       </div>
-    );
+    )
   }
 
   function getStatus(status: string) {
     switch (status) {
-      case "pending":
-        return "Pendente";
-      case "paid":
-        return "Pago";
-      case "canceled":
-        return "Cancelado";
-      case "expired":
-        return "Expirado";
+      case 'pending':
+        return 'Pendente'
+      case 'paid':
+        return 'Pago'
+      case 'canceled':
+        return 'Cancelado'
+      case 'expired':
+        return 'Expirado'
       default:
-        return "Pendente";
+        return 'Pendente'
     }
   }
 
   function getStatusClass(status: string) {
     switch (status) {
-      case "pending":
-        return "text-yellow-500";
-      case "paid":
-        return "text-green-500";
-      case "canceled":
-        return "Cancelado";
-      case "expired":
-        return "text-red-500";
+      case 'pending':
+        return 'text-yellow-500'
+      case 'paid':
+        return 'text-green-500'
+      case 'canceled':
+        return 'Cancelado'
+      case 'expired':
+        return 'text-red-500'
       default:
-        return "text-gray-500";
+        return 'text-gray-500'
     }
   }
 
   function handleMulta(checked: boolean) {
-    setMulta(checked);
+    setMulta(checked)
   }
 
   const handleChange = (
@@ -182,101 +182,101 @@ export function GestaoCobrancaInvoices() {
     value: number,
     maskedValue: string,
   ) => {
-    event.preventDefault();
+    event.preventDefault()
 
-    setAmount(value);
-    setMaskedValue(maskedValue);
-  };
+    setAmount(value)
+    setMaskedValue(maskedValue)
+  }
 
   const handleChangeMulta = (
     event: FormEvent,
     value: number,
     maskedValue: string,
   ) => {
-    event.preventDefault();
+    event.preventDefault()
 
-    setAmountMulta(value);
-    setMaskedValueMulta(maskedValue);
-  };
+    setAmountMulta(value)
+    setMaskedValueMulta(maskedValue)
+  }
 
   function clearForm() {
-    setAmount(0);
-    setSelectedPerson(null);
-    setDueDate("");
+    setAmount(0)
+    setSelectedPerson(null)
+    setDueDate('')
   }
 
   async function handleGenerateInvoice(event: React.FormEvent) {
-    event.preventDefault();
-    hidden();
+    event.preventDefault()
+    hidden()
 
     if (!selectedPerson) {
       showNotification({
-        type: "error",
-        title: "Erro ao continuar.",
-        message: "É preciso selecionar um cliente.",
-      });
-      return;
+        type: 'error',
+        title: 'Erro ao continuar.',
+        message: 'É preciso selecionar um cliente.',
+      })
+      return
     }
 
     if (!selectedPerson?.id) {
       showNotification({
-        type: "error",
-        title: "Erro ao continuar.",
-        message: "É preciso selecionar um cliente.",
-      });
-      return;
+        type: 'error',
+        title: 'Erro ao continuar.',
+        message: 'É preciso selecionar um cliente.',
+      })
+      return
     }
 
     if (!amount || amount === 0) {
       showNotification({
-        type: "error",
-        title: "Erro ao continuar.",
-        message: "É preciso informar um valor.",
-      });
-      return;
+        type: 'error',
+        title: 'Erro ao continuar.',
+        message: 'É preciso informar um valor.',
+      })
+      return
     }
 
     if (amount < 5) {
       showNotification({
-        type: "error",
-        title: "Erro ao continuar.",
-        message: "O valor precisa ser maior que R$ 5,00.",
-      });
-      return;
+        type: 'error',
+        title: 'Erro ao continuar.',
+        message: 'O valor precisa ser maior que R$ 5,00.',
+      })
+      return
     }
 
     if (!validateDate(dueDate)) {
       showNotification({
-        type: "error",
-        title: "Erro ao continuar.",
-        message: "É preciso informar uma data válida",
-      });
-      return;
+        type: 'error',
+        title: 'Erro ao continuar.',
+        message: 'É preciso informar uma data válida',
+      })
+      return
     }
 
     const raw = {
       client_id: selectedPerson.id,
       amount,
       due_date: formatDateToYYYYMMDD(dueDate),
-    };
+    }
 
     try {
-      setLoading(true);
-      const { data } = await api.post(`invoices`, raw);
-      setInvoice(data.invoice);
-      clearForm();
-      setOpen(false);
-      fetchInvoices();
-      setOpenModal(true);
+      setLoading(true)
+      const { data } = await api.post(`invoices`, raw)
+      setInvoice(data.invoice)
+      clearForm()
+      setOpen(false)
+      fetchInvoices()
+      setOpenModal(true)
     } catch (err) {
-      const error = parseError(err);
+      const error = parseError(err)
       showNotification({
-        type: "error",
-        title: "Erro ao continuar.",
+        type: 'error',
+        title: 'Erro ao continuar.',
         message: error.message,
-      });
+      })
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
   }
 
@@ -395,7 +395,7 @@ export function GestaoCobrancaInvoices() {
                         <td className="whitespace-nowrap py-4 text-center text-sm text-gray-500">
                           {invoice?.payment_method
                             ? invoice?.payment_method
-                            : "-"}
+                            : '-'}
                         </td>
 
                         <td className="whitespace-nowrap py-4 text-sm text-gray-500">
@@ -428,22 +428,22 @@ export function GestaoCobrancaInvoices() {
                             >
                               <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                 <div className="py-1">
-                                  <Menu.Item>
+                                  {/* <Menu.Item>
                                     {({ active }) => (
                                       <a
                                         href={`${customer?.ib}/u/checkout/${invoice.id}`}
                                         target="_bank"
                                         className={classNames(
                                           active
-                                            ? "bg-gray-100 text-gray-900"
-                                            : "text-gray-700",
-                                          "block px-4 py-2 text-sm",
+                                            ? 'bg-gray-100 text-gray-900'
+                                            : 'text-gray-700',
+                                          'block px-4 py-2 text-sm',
                                         )}
                                       >
                                         Visualizar Fatura
                                       </a>
                                     )}
-                                  </Menu.Item>
+                                  </Menu.Item> */}
 
                                   <Menu.Item>
                                     {({ active }) => (
@@ -452,9 +452,9 @@ export function GestaoCobrancaInvoices() {
                                         target="_bank"
                                         className={classNames(
                                           active
-                                            ? "bg-gray-100 text-gray-900"
-                                            : "text-gray-700",
-                                          "block px-4 py-2 text-sm",
+                                            ? 'bg-gray-100 text-gray-900'
+                                            : 'text-gray-700',
+                                          'block px-4 py-2 text-sm',
                                         )}
                                       >
                                         Visualizar PDF
@@ -566,10 +566,10 @@ export function GestaoCobrancaInvoices() {
                                           value={person}
                                           className={({ active }) =>
                                             classNames(
-                                              "relative cursor-default select-none py-2 pl-8 pr-4",
+                                              'relative cursor-default select-none py-2 pl-8 pr-4',
                                               active
-                                                ? "bg-indigo-600 text-white"
-                                                : "text-gray-900",
+                                                ? 'bg-indigo-600 text-white'
+                                                : 'text-gray-900',
                                             )
                                           }
                                         >
@@ -578,8 +578,8 @@ export function GestaoCobrancaInvoices() {
                                               <span
                                                 className={`block truncate ${
                                                   selected
-                                                    ? "font-semibold"
-                                                    : ""
+                                                    ? 'font-semibold'
+                                                    : ''
                                                 }`}
                                               >
                                                 {person.name}
@@ -588,10 +588,10 @@ export function GestaoCobrancaInvoices() {
                                               {selected && (
                                                 <span
                                                   className={classNames(
-                                                    "absolute inset-y-0 left-0 flex items-center pl-1.5",
+                                                    'absolute inset-y-0 left-0 flex items-center pl-1.5',
                                                     active
-                                                      ? "text-white"
-                                                      : "text-indigo-600",
+                                                      ? 'text-white'
+                                                      : 'text-indigo-600',
                                                   )}
                                                 >
                                                   <CheckIcon
@@ -620,12 +620,12 @@ export function GestaoCobrancaInvoices() {
                                   currency="BRL"
                                   className="w-full text-3xl"
                                   config={{
-                                    locale: "pt-BR",
+                                    locale: 'pt-BR',
                                     formats: {
                                       number: {
                                         BRL: {
-                                          style: "currency",
-                                          currency: "BRL",
+                                          style: 'currency',
+                                          currency: 'BRL',
                                           minimumFractionDigits: 2,
                                           maximumFractionDigits: 2,
                                         },
@@ -699,12 +699,12 @@ export function GestaoCobrancaInvoices() {
                                       currency="BRL"
                                       className="w-full text-3xl"
                                       config={{
-                                        locale: "pt-BR",
+                                        locale: 'pt-BR',
                                         formats: {
                                           number: {
                                             BRL: {
-                                              style: "currency",
-                                              currency: "BRL",
+                                              style: 'currency',
+                                              currency: 'BRL',
                                               minimumFractionDigits: 2,
                                               maximumFractionDigits: 2,
                                             },
@@ -847,7 +847,7 @@ export function GestaoCobrancaInvoices() {
                               CPF/CNPJ
                             </h3>
                             <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-                              {documentFormat(invoice?.client?.document || "")}
+                              {documentFormat(invoice?.client?.document || '')}
                             </p>
                           </div>
 
@@ -856,40 +856,12 @@ export function GestaoCobrancaInvoices() {
                               Endereço
                             </h3>
                             <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-                              {invoice?.client?.address?.street},{" "}
-                              {invoice?.client?.address?.number},{" "}
-                              {invoice?.client?.address?.neighborhood},{" "}
-                              {invoice?.client?.address?.city} {" - "}{" "}
+                              {invoice?.client?.address?.street},{' '}
+                              {invoice?.client?.address?.number},{' '}
+                              {invoice?.client?.address?.neighborhood},{' '}
+                              {invoice?.client?.address?.city} {' - '}{' '}
                               {invoice?.client?.address?.state}
                             </p>
-                          </div>
-
-                          <div className="px-4 pt-2 sm:px-0">
-                            <h3 className="text-base font-semibold leading-7 text-gray-900">
-                              Link da fatura
-                            </h3>
-                            {/* <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-                              {`${customer.ib}/u/checkout/${invoice?.id}`}
-                            </p> */}
-                            <CopyToClipboard
-                              text={`${customer.ib}/u/checkout/${invoice?.id}`}
-                              onCopy={() => {
-                                showNotification({
-                                  type: "success",
-                                  title: "Copiado",
-                                  message: "Link copiado com sucesso",
-                                });
-
-                                setTimeout(() => {
-                                  hidden();
-                                }, 1000);
-                              }}
-                            >
-                              <Button
-                                title={"Copiar link da fatura"}
-                                type="button"
-                              />
-                            </CopyToClipboard>
                           </div>
 
                           <div className="px-4 pt-2 sm:px-0">
@@ -897,21 +869,21 @@ export function GestaoCobrancaInvoices() {
                               Link do PDF
                             </h3>
                             <CopyToClipboard
-                              text={invoice?.url || ""}
+                              text={invoice?.url || ''}
                               onCopy={() => {
                                 showNotification({
-                                  type: "success",
-                                  title: "Copiado",
-                                  message: "Link copiado com sucesso",
-                                });
+                                  type: 'success',
+                                  title: 'Copiado',
+                                  message: 'Link copiado com sucesso',
+                                })
 
                                 setTimeout(() => {
-                                  hidden();
-                                }, 1000);
+                                  hidden()
+                                }, 1000)
                               }}
                             >
                               <Button
-                                title={"Copiar link do PDF"}
+                                title={'Copiar link do PDF'}
                                 type="button"
                               />
                             </CopyToClipboard>
@@ -936,5 +908,5 @@ export function GestaoCobrancaInvoices() {
         </Dialog>
       </Transition.Root>
     </>
-  );
+  )
 }

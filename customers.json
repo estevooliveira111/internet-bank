@@ -1,32 +1,109 @@
 {
   "customers": [
-    { "ref": "661fe87a-44d2-4168-8f02-07b5ddb00db7", "host": "localhost" },
+    { "ref": "e6b2330e-28b4-4d56-a997-76646df074b6", "host": "localhost" },
     { "ref": "67aac4e9-fb02-4956-bf38-2168d8be8394", "host": "i3bank.com.br" },
-    { "ref": "b51a3b0b-d9f4-4b91-9dfa-e99512c924be", "host": "acesso.umbank.com.br" },
-    { "ref": "b51a3b0b-d9f4-4b91-9dfa-e99512c924be", "host": "umbank.stric.com.br" },
-    { "ref": "11555cea-4aff-4092-89b7-dd21dc95b3df", "host": "ib.vfbankdigital.com.br" },
-    { "ref": "6158c44a-ccae-43f6-80c4-babc62f94d21", "host": "moncocbank.stric.com.br"},
-    { "ref": "e48c3743-4882-4949-933f-9576c350c98c", "host": "mhetabank.stric.com.br"},
-    { "ref": "e48c3743-4882-4949-933f-9576c350c98c", "host": "methabank.stric.com.br"},
-    { "ref": "3056c1ff-d810-441e-91bf-68db027cbd03", "host": "alfbank.stric.com.br" },
-    { "ref": "032675fb-68e1-4709-b255-e3a5d8c4b5df", "host": "educacaobankconta.com.br" },
-    { "ref": "7eb303d6-f33b-4a39-a056-405e76aac8dd", "host": "genesiscontacorrente.com.br" },
+    {
+      "ref": "856a89ce-fdc0-4f97-a4fe-db74c272c2d5",
+      "host": "bosvista.stric.com.br"
+    },
+    {
+      "ref": "b51a3b0b-d9f4-4b91-9dfa-e99512c924be",
+      "host": "acesso.umbank.com.br"
+    },
+    {
+      "ref": "b51a3b0b-d9f4-4b91-9dfa-e99512c924be",
+      "host": "umbank.stric.com.br"
+    },
+    {
+      "ref": "11555cea-4aff-4092-89b7-dd21dc95b3df",
+      "host": "ib.vfbankdigital.com.br"
+    },
+    {
+      "ref": "6158c44a-ccae-43f6-80c4-babc62f94d21",
+      "host": "moncocbank.stric.com.br"
+    },
+    {
+      "ref": "e48c3743-4882-4949-933f-9576c350c98c",
+      "host": "mhetabank.stric.com.br"
+    },
+    {
+      "ref": "e48c3743-4882-4949-933f-9576c350c98c",
+      "host": "methabank.stric.com.br"
+    },
+    {
+      "ref": "3056c1ff-d810-441e-91bf-68db027cbd03",
+      "host": "alfbank.stric.com.br"
+    },
+    {
+      "ref": "032675fb-68e1-4709-b255-e3a5d8c4b5df",
+      "host": "educacaobankconta.com.br"
+    },
+    {
+      "ref": "7eb303d6-f33b-4a39-a056-405e76aac8dd",
+      "host": "genesiscontacorrente.com.br"
+    },
     { "ref": "58446b19-c24d-4654-89f4-2932ff7ea530", "host": "bwgbank.com.br" },
     { "ref": "8c32f616-d6ee-4687-a5b6-a072256d8dec", "host": "allepay.com.br" },
-    { "ref": "597b8b7e-1a6f-40c2-9f73-a4a52f417baa", "host": "banco.energybnk.com.br" },
-    { "ref": "597b8b7e-1a6f-40c2-9f73-a4a52f417baa", "host": "energybnk.stric.com.br" },
-    { "ref": "9b72046f-d549-409f-9c82-6d3b9d955100", "host": "acesso.rocbank.com.br" },
-    { "ref": "9b72046f-d549-409f-9c82-6d3b9d955100", "host": "rocbank.stric.com.br" },
-    { "ref": "8a15274a-b985-4f15-857f-9952eb013445",  "host": "acesso.fncbank.com.br"},
-    { "ref": "8a15274a-b985-4f15-857f-9952eb013445", "host": "fncbank.stric.com.br" },
-    { "ref": "661fe87a-44d2-4168-8f02-07b5ddb00db7", "host": "bankbandec.com.br" },
-    { "ref": "661fe87a-44d2-4168-8f02-07b5ddb00db7", "host": "bandec.stric.com.br" },
-    { "ref": "e7345077-bfe4-40b0-bcd0-3a563b86b170", "host": "zixbank.stric.com.br" },
-    { "ref": "e7345077-bfe4-40b0-bcd0-3a563b86b170", "host": "msmbank.stric.com.br" },
-    { "ref": "e7345077-bfe4-40b0-bcd0-3a563b86b170", "host": "banorb.stric.com.br" },
-    { "ref": "f06dde70-d600-406e-8f1b-5f8cfd660c46", "host": "ib.allbankinvest.com.br" },
-    { "ref": "6f140fa7-64ca-4d1c-8a5b-50fc3f98dd62", "host": "ativobanking.com.br" },
-    { "ref": "e6b2330e-28b4-4d56-a997-76646df074b6", "host": "tst.stric.com.br" },
-    { "ref": "e6b2330e-28b4-4d56-a997-76646df074b6", "host": "bank.stric.com.br" }
+    { "ref": "8c32f616-d6ee-4687-a5b6-a072256d8dec", "host": "ib-bank.allebank.net.br" },
+    {
+      "ref": "597b8b7e-1a6f-40c2-9f73-a4a52f417baa",
+      "host": "banco.energybnk.com.br"
+    },
+    {
+      "ref": "597b8b7e-1a6f-40c2-9f73-a4a52f417baa",
+      "host": "energybnk.stric.com.br"
+    },
+    {
+      "ref": "9b72046f-d549-409f-9c82-6d3b9d955100",
+      "host": "acesso.rocbank.com.br"
+    },
+    {
+      "ref": "9b72046f-d549-409f-9c82-6d3b9d955100",
+      "host": "rocbank.stric.com.br"
+    },
+    {
+      "ref": "8a15274a-b985-4f15-857f-9952eb013445",
+      "host": "acesso.fncbank.com.br"
+    },
+    {
+      "ref": "8a15274a-b985-4f15-857f-9952eb013445",
+      "host": "fncbank.stric.com.br"
+    },
+    {
+      "ref": "661fe87a-44d2-4168-8f02-07b5ddb00db7",
+      "host": "bankbandec.com.br"
+    },
+    {
+      "ref": "661fe87a-44d2-4168-8f02-07b5ddb00db7",
+      "host": "bandec.stric.com.br"
+    },
+    {
+      "ref": "e7345077-bfe4-40b0-bcd0-3a563b86b170",
+      "host": "zixbank.stric.com.br"
+    },
+    {
+      "ref": "e7345077-bfe4-40b0-bcd0-3a563b86b170",
+      "host": "msmbank.stric.com.br"
+    },
+    {
+      "ref": "e7345077-bfe4-40b0-bcd0-3a563b86b170",
+      "host": "banorb.stric.com.br"
+    },
+    {
+      "ref": "f06dde70-d600-406e-8f1b-5f8cfd660c46",
+      "host": "ib.allbankinvest.com.br"
+    },
+    {
+      "ref": "6f140fa7-64ca-4d1c-8a5b-50fc3f98dd62",
+      "host": "ativobanking.com.br"
+    },
+    {
+      "ref": "e6b2330e-28b4-4d56-a997-76646df074b6",
+      "host": "tst.stric.com.br"
+    },
+    {
+      "ref": "e6b2330e-28b4-4d56-a997-76646df074b6",
+      "host": "bank.stric.com.br"
+    }
   ]
 }

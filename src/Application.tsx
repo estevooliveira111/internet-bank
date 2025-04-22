@@ -26,6 +26,8 @@ export function Application() {
       changeFavicon('vfbank.png')
     } else if (customer?.display_name === 'AtivoBanking') {
       changeFavicon('ativobanking.png')
+    } else if (customer?.display_name === 'AllBank Invest') {
+      changeFavicon('allbankinvest.png')
     } else {
       changeFavicon('vite.svg')
     }

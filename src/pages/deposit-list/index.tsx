@@ -21,35 +21,34 @@ export function DepositList() {
               <ArrowRightIcon color="var(--primary)" width={21} height={21} />
             </div>
           </Link>
-
         )}
 
         {customer.display_name !== 'BANDEC' && (
           <Link
-          to="/deposit/ted"
-          className="flex w-full cursor-pointer flex-col  justify-between rounded-md bg-white p-4 hover:opacity-75 md:h-48 md:w-64"
-        >
-          <DepositIcon color="var(--primary)" width={48} height={48} />
-          <div className="mt-4 flex items-center justify-between">
-            <span className="inline-flex w-3/4">Depósito por TED ou DOC</span>
-            <ArrowRightIcon color="var(--primary)" width={21} height={21} />
-          </div>
-        </Link>
+            to="/deposit/ted"
+            className="flex w-full cursor-pointer flex-col  justify-between rounded-md bg-white p-4 hover:opacity-75 md:h-48 md:w-64"
+          >
+            <DepositIcon color="var(--primary)" width={48} height={48} />
+            <div className="mt-4 flex items-center justify-between">
+              <span className="inline-flex w-3/4">Depósito por TED ou DOC</span>
+              <ArrowRightIcon color="var(--primary)" width={21} height={21} />
+            </div>
+          </Link>
         )}
 
         {customer.display_name !== 'BANDEC' && (
           <Link
-          to="/deposit/billet/new"
-          className="flex w-full cursor-pointer flex-col justify-between rounded-md bg-white p-4 hover:opacity-75 md:h-48 md:w-64"
-        >
-          <PaymentIcon color="var(--primary)" width={48} height={48} />
-          <div className="mt-4 flex items-center justify-between">
-            <span className="inline-flex w-20 text-tx-primary">
-              Depósito por Boleto
-            </span>
-            <ArrowRightIcon color="var(--primary)" width={21} height={21} />
-          </div>
-        </Link>
+            to="/deposit/billet/new"
+            className="flex w-full cursor-pointer flex-col justify-between rounded-md bg-white p-4 hover:opacity-75 md:h-48 md:w-64"
+          >
+            <PaymentIcon color="var(--primary)" width={48} height={48} />
+            <div className="mt-4 flex items-center justify-between">
+              <span className="inline-flex w-20 text-tx-primary">
+                Depósito por Boleto
+              </span>
+              <ArrowRightIcon color="var(--primary)" width={21} height={21} />
+            </div>
+          </Link>
         )}
 
         <Link

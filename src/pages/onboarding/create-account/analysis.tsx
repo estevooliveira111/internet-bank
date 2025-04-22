@@ -1,19 +1,19 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../../hooks/auth";
-import OnBoardingStep from "../step";
-import { useCustomer } from "@/hooks/customer";
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../../../hooks/auth'
+import OnBoardingStep from '../step'
+import { useCustomer } from '@/hooks/customer'
 
 export function OnBoardingAnalysis() {
-  const { user, signOut } = useAuth();
-  const { customer } = useCustomer();
-  const navigate = useNavigate();
+  const { user, signOut } = useAuth()
+  const { customer } = useCustomer()
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (!user) {
-      navigate("/u");
+      navigate('/u')
     }
-  }, [user, navigate]);
+  }, [user, navigate])
 
   return (
     <>
@@ -40,7 +40,7 @@ export function OnBoardingAnalysis() {
 
               <div className="mt-20 pl-4 pr-4 md:pl-20 md:pr-20">
                 <h1 className="color-tx-primary text-3xl font-thin">
-                  Você está a poucos passos de <br /> uma nova{" "}
+                  Você está a poucos passos de <br /> uma nova{' '}
                   <span className="font-semibold">experiência financeira</span>
                 </h1>
                 <div className="my-4 h-[4px] w-[42px] bg-primary" />
@@ -56,13 +56,13 @@ export function OnBoardingAnalysis() {
                     <div className="flex flex-1 flex-col">
                       <p>
                         Aguarde enquanto processamos a análise dos seus dados.
-                        Dentro de um 3 dias úteis, enviaremos a resposta
-                        diretamente para o seu e-mail.
+                        Dentro 24 horas, enviaremos a resposta diretamente para
+                        o seu e-mail.
                       </p>
                     </div>
                   </div>
 
-                  {customer.name === "Umbank" && (
+                  {customer.name === 'Umbank' && (
                     <div className="mt-4 flex items-center">
                       <div className="flex flex-1 flex-col">
                         <p className="mb-4">
@@ -85,7 +85,7 @@ export function OnBoardingAnalysis() {
                   <div className="my-8 mt-40 flex items-center justify-center">
                     <button
                       onClick={() => {
-                        signOut();
+                        signOut()
                       }}
                       className="flex w-full items-center justify-center rounded-md bg-primary px-4 py-3 text-center text-main-white md:w-auto md:min-w-[300px]"
                       type="button"
@@ -104,5 +104,5 @@ export function OnBoardingAnalysis() {
         </div>
       </div>
     </>
-  );
+  )
 }

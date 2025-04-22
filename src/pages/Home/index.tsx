@@ -18,7 +18,7 @@ import { numberToCurrent } from '@utils/number-to-currency'
 import { useHome } from './use-home'
 
 import { AccountStats, Transactions } from './styles'
-import { UploadDocs } from '@/components/pin-modal/upload-docs'
+// import { UploadDocs } from '@/components/pin-modal/upload-docs'
 
 export function Home() {
   const { isBalanceVisible } = useBalance()
@@ -27,9 +27,9 @@ export function Home() {
 
   return (
     <div className="h-screen">
-      {(user?.docs === 'ACCOUNT_CREATED' ||
+      {/* {(user?.docs === 'ACCOUNT_CREATED' ||
         user?.docs === 'ACCOUNT_CONFIRMED' ||
-        user?.docs === 'KYC_PENDING') && <UploadDocs />}
+        user?.docs === 'KYC_PENDING') && <UploadDocs />} */}
       <div className="flex flex-col">
         <AccountStats>
           <Card
