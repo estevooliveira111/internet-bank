@@ -244,9 +244,7 @@ export function DepositQrCode() {
           className="inline-flex w-full flex-col items-center rounded bg-[#EAEAEA] p-6 md:w-[492px]"
           onSubmit={handleSubmit}
         >
-          <div className="max-w-sm">
-            <img src={data?.qrcode} alt="Imagem" />
-          </div>
+            <img src={`${data?.qrcode}`} alt="Imagem" />
           <div className="mt-4 break-all">{data?.emv}</div>
           <div className="mt-4 flex max-w-[492px] flex-row justify-between">
             <CopyToClipboard
